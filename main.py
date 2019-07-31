@@ -23,22 +23,18 @@ def get_url_list(url):
     pages = map(lambda x: root + str(x.get('href')), pages)
     return pages
 
-# 传入每一个页面的URL和已有html，返回新的html
+# 传入每一个页面的URL, 返回该页面html
 def get_content(url):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "lxml")
     content = soup.find(class_='page__content')
     content = content.find_all('div')[1]
     new_html = '<h1>{title}</h1>\n'.format(title = soup.title.string) + str(content)
-    #html = html_template.format(style = style, content = str(content), title = soup.title.string)
-    #file_name = soup.title.string + '.html'
-    #with open(file_name, 'w', encoding = 'utf-8') as file_obj:
-    #    file_obj.write(html)
     return new_html
 
 def save_pdf(file_name):
     options = {
-        'page-size': 'Letter',
+        'page-size': 'A4',
         'encoding': "UTF-8",
         'custom-header': [
             ('Accept-Encoding', 'gzip')
@@ -46,32 +42,32 @@ def save_pdf(file_name):
     }
     pdfkit.from_file(file_name + '.html', file_name + '.pdf', options=options)
 
+
 # main
-html = """
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <style>
-        {style}
-    </style>
-</head> 
-<body> 
-"""  
-
-html = load_css(html)
-with open('book.html', 'w', encoding='utf-8') as f:
-    f.write(html)
-
-urls = get_url_list('https://webpack.docschina.org/concepts/')
-
-for url in urls:
-    html = get_content(url) + '\n<br/>'
-    with open('book.html', 'a', encoding='utf-8') as f:
+if __name__ == '__main__':
+    html = """
+    <!DOCTYPE html> 
+    <html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <style>
+            {style}
+        </style>
+    </head> 
+    <body> 
+    """  
+    html = load_css(html)
+    with open('book.html', 'w', encoding='utf-8') as f:
         f.write(html)
-    print(url + " completed")
 
+    urls = get_url_list('https://webpack.docschina.org/concepts/')
+    for url in urls:
+        html = get_content(url) + '\n<div class="break-after"></div>'
+        with open('book.html', 'a', encoding='utf-8') as f:
+            f.write(html)
+        print(url + " completed")
 
-with open('book.html', 'a', encoding='utf-8') as f:
-    f.write('</body>\n</html>')
-save_pdf('book')
+    with open('book.html', 'a', encoding='utf-8') as f:
+        f.write('</body>\n</html>')
+
+    save_pdf('book')

@@ -1,16 +1,163 @@
- 
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <style>
-        a {
-  color: black
+
+    <!DOCTYPE html> 
+    <html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <style>
+            a {
+	color: black
 }
-    </style>
-</head> 
-<body> 
-<h1>概念</h1>
+
+html {
+	font-size: 250%
+}
+
+.table {
+	margin: 1em 0;
+}
+
+@media (min-width: 768px) {
+	.table {
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+}
+
+.table-wrap {
+	display: block;
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.table-wrap {
+		display: table;
+		border-left: 1px solid #cccccc;
+		border-bottom: 1px solid #cccccc;
+	}
+}
+
+.table-tr {
+	background-color: white;
+	margin: 0;
+	padding: 0.25em 0;
+	display: block;
+	border: 1px solid #cccccc;
+	border-bottom: none;
+}
+
+@media (min-width: 768px) {
+	.table-tr {
+		border: none;
+		padding: 0;
+		display: table-row;
+	}
+}
+
+.table-tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.table-tr:last-child {
+	border-bottom: 1px solid #cccccc;
+}
+
+.table-th {
+	font-weight: bold;
+	border-bottom: none;
+	text-align: left;
+	margin: 0;
+	padding: 6px 12px;
+	background: #f1f4f4;
+}
+
+.table-td {
+	text-align: left;
+	margin: 0;
+	padding: 4px 12px;
+}
+
+.table-td img {
+	max-width: none;
+}
+
+.table-td-title {
+	display: block;
+	width: 40%;
+}
+
+@media (min-width: 768px) {
+	.table-td-title {
+		display: none;
+		width: auto;
+	}
+}
+
+.table-td-content {
+	display: block;
+	width: 60%;
+}
+
+.table-td-content code {
+	white-space: normal;
+	word-break: break-word;
+}
+
+@media (min-width: 768px) {
+	.table-td-content {
+		width: auto;
+	}
+
+	.table-td-content code {
+		word-break: normal;
+		white-space: nowrap;
+	}
+}
+
+.table-th, .table-td {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-preferred-size: 100%;
+	flex-basis: 100%;
+	-ms-flex-item-align: stretch;
+	align-self: stretch;
+}
+
+@media (min-width: 768px) {
+	.table-th, .table-td {
+		border-top: 1px solid #cccccc;
+		border-right: 1px solid #cccccc;
+		display: table-cell;
+	}
+}
+
+.table-header {
+	display: none;
+}
+
+.table-header .table-tr {
+	border-bottom: none;
+}
+
+@media (min-width: 768px) {
+	.table-header {
+		display: table-header-group;
+	}
+}
+
+@media (min-width: 768px) {
+	.table-body {
+		display: table-row-group;
+	}
+}
+
+.break-after {
+    page-break-after: always;
+}
+        </style>
+    </head> 
+    <body> 
+    <h1>概念</h1>
 <div><p>本质上，<strong>webpack</strong> 是一个现代 JavaScript 应用程序的<em>静态模块打包工具</em>。当 webpack 处理应用程序时，它会在内部构建一个 <a href="/concepts/dependency-graph/">依赖图(dependency graph)</a>，此依赖图会映射项目所需的每个模块，并生成一个或多个 <em>bundle</em>。</p>
 <blockquote class="tip"><div class="tip-content"> 可以在 <a href="/concepts/modules">这里</a> 了解更多关于 JavaScript 模块和 webpack 模块的信息。 </div></blockquote><p>从 v4.0.0 开始，<strong>webpack 可以不用再引入一个配置文件</strong>来打包项目，然而，但它仍然有着 <a href="/configuration">高度可配置性</a>，可以很好满足你的需求。</p>
 <p>在开始前你需要先理解一些<strong>核心概念</strong>：</p>
@@ -132,7 +279,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p>webpack 支持所有符合 <a href="https://kangax.github.io/compat-table/es5/">ES5 标准</a> 的浏览器（不支持 IE8 及以下版本）。webpack 的 <code>import()</code> 和 <code>require.ensure()</code> 需要 <code>Promise</code>。如果你想要支持旧版本浏览器，在使用这些表达式之前，还需要 <a href="/guides/shimming/">提前加载 polyfill</a>。</p>
 </div>
-<br/><h1>入口起点(entry points)</h1>
+<div class="break-after"></div><h1>入口起点(entry points)</h1>
 <div><p>正如我们在 <a href="/guides/getting-started/#using-a-configuration">起步</a> 中提到的，在 webpack 配置中有多种方式定义 <code>entry</code> 属性。除了解释为什么它可能非常有用，我们还将向你展示<strong>如何去</strong>配置 <code>entry</code> 属性。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#单个入口-简写-语法" id="单个入口-简写-语法"></a>
@@ -200,7 +347,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <li>使用 <code>optimization.splitChunks</code> 为页面间共享的应用程序代码创建 bundle。由于入口起点增多，多页应用能够复用入口起点之间的大量代码/模块，从而可以极大地从这些技术中受益。</li>
 </ul>
 <blockquote class="tip"><div class="tip-content"> 根据经验：每个 HTML 文档只使用一个入口起点。 </div></blockquote></div>
-<br/><h1>输出(output)</h1>
+<div class="break-after"></div><h1>输出(output)</h1>
 <div><p>配置 <code>output</code> 选项可以控制 webpack 如何向硬盘写入编译文件。注意，即使可以存在多个 <code>entry</code> 起点，但只指定一个 <code>output</code> 配置。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#用法-usage-" id="用法-usage-"></a>
@@ -259,7 +406,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token comment">// 应用程序入口的其余部分</span>
 </code></pre>
 </div>
-<br/><h1>模式(mode)</h1>
+<div class="break-after"></div><h1>模式(mode)</h1>
 <div><p>提供 <code>mode</code> 配置选项，告知 webpack 使用相应环境的内置优化。</p>
 <p><code>string</code></p>
 <blockquote class="tip"><div class="tip-content"> 可能的值有：<code>none</code>, <code>development</code> 或 <code>production</code>（默认）。 </div></blockquote><h2 class="header">
@@ -461,7 +608,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>loader</h1>
+<div class="break-after"></div><h1>loader</h1>
 <div><p>loader 用于对模块的源代码进行转换。loader 可以使你在 <code>import</code> 或"加载"模块时预处理文件。因此，loader 类似于其他构建工具中“任务(task)”，并提供了处理前端构建步骤的强大方法。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript 或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模块中 <code>import</code> CSS文件！</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#示例" id="示例"></a>
@@ -565,7 +712,7 @@ npm <span class="token function">install</span> --save-dev ts-loader
 <p>loader 遵循 <a href="/concepts/module-resolution/">模块解析</a> 标准。多数情况下，loader 将从 <a href="/concepts/module-resolution/#module-paths">模块路径</a> 加载（通常是从 <code>npm install</code>, <code>node_modules</code> 进行加载）。</p>
 <p>通常使用 npm 进行管理，但是也可以将自定义 loader 作为应用程序中的文件。按照约定，loader 通常被命名为 <code>xxx-loader</code>（例如 <code>json-loader</code>）。更多详细信息请查看 <a href="/contribute/writing-a-loader">如何编写 loader？</a>。</p>
 </div>
-<br/><h1>插件(plugin)</h1>
+<div class="break-after"></div><h1>插件(plugin)</h1>
 <div><p><strong>插件</strong>是 webpack 的 <a href="https://github.com/webpack/tapable">支柱</a> 功能。webpack 自身也是构建于，你在 webpack 配置中用到的<strong>相同的插件系统</strong>之上！</p>
 <p>插件目的在于解决 <a href="/concepts/loaders">loader</a> 无法实现的<strong>其他事</strong>。</p>
 <h2 class="header">
@@ -642,7 +789,7 @@ compiler<span class="token punctuation">.</span><span class="token function">run
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <blockquote class="tip"><div class="tip-content"> 你知道吗：以上看到的示例和 <a href="https://github.com/webpack/webpack/blob/e7087ffeda7fa37dfe2ca70b5593c6e899629a2c/bin/webpack.js#L290-L292">webpack 自身运行时(runtime)</a> 极其类似。<a href="https://github.com/webpack/webpack">wepback 源码</a>中隐藏有大量使用示例，你可以用在自己的配置和脚本中。 </div></blockquote></div>
-<br/><h1>配置(configuration)</h1>
+<div class="break-after"></div><h1>配置(configuration)</h1>
 <div><p>你可能已经注意到，很少有 webpack 配置看起来完全相同。这是因为 <strong>webpack 的配置文件，是一个导出 webpack <a href="/configuration/">配置对象</a> 的 JavaScript 文件。</strong>然后 webpack 会根据此配置对象上定义的属性进行处理。</p>
 <p>因为 webpack 配置是标准的 Node.js CommonJS 模块，你<strong>可以做到以下事情</strong>：</p>
 <ul>
@@ -693,7 +840,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <p>webpack 接受以多种编程和数据语言编写的配置文件。</p>
 <p>查看：<a href="/configuration/configuration-languages/">配置语言</a></p>
 </div>
-<br/><h1>模块(module)</h1>
+<div class="break-after"></div><h1>模块(module)</h1>
 <div><p>在 <a href="https://en.wikipedia.org/wiki/Modular_programming">模块化编程</a> 中，开发者将程序分解为功能离散的 chunk(discrete chunks of functionality)，并称之为_模块_。</p>
 <p>每个模块具有比完整程序更小的接触面，使得验证、调试、测试轻而易举。
 精心编写的_模块_提供了可靠的抽象和封装界限，使得应用程序中每个模块，都具备了条理清楚的设计和明确的目的。</p>
@@ -732,7 +879,7 @@ webpack 社区已经为各种流行语言和语言处理器创建了 <em>loader<
 <p>其实还有很多！总的来说，webpack 提供了可定制的、强大和丰富的 API，允许在<strong>任何技术栈</strong>中使用 webpack，同时在开发、测试和生产环境下的工作流程中做到<strong>无侵入性</strong>。</p>
 <p>有关完整列表，请参考 <a href="/loaders"><strong>loader 列表</strong></a> 或 <a href="/api/loaders"><strong>编写你自己的 loader</strong></a>。</p>
 </div>
-<br/><h1>为什么选择 webpack</h1>
+<div class="break-after"></div><h1>为什么选择 webpack</h1>
 <div><p>想要理解为什么要使用 webpack，我们先回顾下历史，在打包工具出现之前，我们是如何在 web 中使用 JavaScript 的。</p>
 <p>在浏览器中运行 JavaScript 有两种方法。第一种方式，引用一些脚本来存放每个功能；此解决方案很难扩展，因为加载太多脚本会导致网络瓶颈。第二种方式，使用一个包含所有项目代码的大型 <code>.js</code> 文件，但是这会导致作用域、文件大小、可读性和可维护性方面的问题。</p>
 <h2 class="header">
@@ -775,7 +922,7 @@ webpack 社区已经为各种流行语言和语言处理器创建了 <em>loader<
 w
 webpack 关心性能和加载时间；它始终在改进或添加新功能，例如：异步地加载 chunk 和预取，以便为你的项目和用户提供最佳体验。</p>
 </div>
-<br/><h1>模块解析(module resolution)</h1>
+<div class="break-after"></div><h1>模块解析(module resolution)</h1>
 <div><p>resolver 是一个库(library)，用于帮助找到模块的绝对路径。
 一个模块可以作为另一个模块的依赖模块，然后被后者引用，如下：</p>
 <pre><code class="lang-js"><span class="token keyword">import</span> foo <span class="token keyword">from</span> <span class="token string">'path/to/module'</span><span class="token punctuation">;</span>
@@ -846,13 +993,13 @@ resolver 帮助 webpack 从每个如 <code>require</code>/<code>import</code> �
 <p>每次文件系统访问都会被缓存，以便更快触发对同一文件的多个并行或串行请求。在 <a href="/configuration/watch/#watch">观察模式(watch mode)</a> 下，只有修改过的文件会从缓存中摘出。如果关闭观察模式，会在每次编译前清理缓存。</p>
 <p>有关上述配置的更多信息，请查看 <a href="/configuration/resolve">resolve API</a>。</p>
 </div>
-<br/><h1>依赖图(dependency graph)</h1>
+<div class="break-after"></div><h1>依赖图(dependency graph)</h1>
 <div><p>任何时候，一个文件依赖于另一个文件，webpack 就把此视为文件之间有 <em>依赖关系</em>。这使得 webpack 可以接收非代码资源(non-code asset)（例如 images 或 web fonts），并且可以把它们作为 _依赖_ 提供给你的应用程序。</p>
 <p>webpack 从命令行或配置文件中定义的一个模块列表开始，处理你的应用程序。
 从这些 <a href="/concepts/entry-points/"><em>入口起点</em></a> 开始，webpack 递归地构建一个<em>依赖图</em>，这个依赖图包含着应用程序所需的每个模块，然后将所有这些模块打包为少量的 <em>bundle</em> - 通常只有一个 - 可由浏览器加载。</p>
 <blockquote class="tip"><div class="tip-content"> 对于 <em>HTTP/1.1</em> 客户端，由 webpack 打包你的应用程序会极其强大，这是因为在浏览器发起一个新请求时，它能够减少应用程序必须等待的时间。对于 <em>HTTP/2</em>，你还可以使用 <a href="/guides/code-splitting/">代码分离</a> 来实现最佳构建结果。
 de </div></blockquote></div>
-<br/><h1>manifest</h1>
+<div class="break-after"></div><h1>manifest</h1>
 <div><p>在使用 webpack 构建的典型应用程序或站点中，有三种主要的代码类型：</p>
 <ol start="undefined">
 <li>你或你的团队编写的源码。</li>
@@ -882,7 +1029,7 @@ de </div></blockquote></div>
 <p>通过使用内容散列(content hash)作为 bundle 文件的名称，这样在文件内容修改时，会计算出新的 hash，浏览器会使用新的名称加载文件，从而使缓存无效。一旦你开始这样做，你会立即注意到一些有趣的行为。即使某些内容明显没有修改，某些 hash 还是会改变。这是因为，注入的 runtime 和 manifest 在每次构建后都会发生变化。</p>
 <p>查看<em>管理输出</em>指南的 <a href="/guides/output-management/#the-manifest">manifest 部分</a>，了解如何提取 manifest，并阅读下面的指南，以了解更多长效缓存错综复杂之处。</p>
 </div>
-<br/><h1>部署目标(target)</h1>
+<div class="break-after"></div><h1>部署目标(target)</h1>
 <div><p>因为服务器和浏览器代码都可以用 JavaScript 编写，所以 webpack 提供了多种部署 <em>target(目标)</em>，你可以在你的 webpack <a href="/configuration">配置对象</a> 中进行设置。</p>
 <blockquote class="warning"><div class="tip-content"> webpack 的 <code>target</code> 属性，不要和 <code>output.libraryTarget</code> 属性混淆。有关 <code>output</code> 属性的更多信息，请查看我们的 <a href="/concepts/output/">指南</a>。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#用法" id="用法"></a>
@@ -937,7 +1084,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <li><strong><a href="https://github.com/chentsulin/electron-react-boilerplate">Boilerplate of Electron-React Application</a></strong>：一个 electron 主进程和渲染进程构建过程的很好的例子。</li>
 </ul>
 <blockquote class="todo"><div class="tip-content"> Need to find up to date examples of these webpack targets being used in live code or boilerplates. </div></blockquote></div>
-<br/><h1>模块热替换(hot module replacement)</h1>
+<div class="break-after"></div><h1>模块热替换(hot module replacement)</h1>
 <div><p>模块热替换(HMR - hot module replacement)功能会在应用程序运行过程中，替换、添加或删除 <a href="/concepts/modules/">模块</a>，而无需重新加载整个页面。主要是通过以下几种方式，来显著加快开发速度：</p>
 <ul>
 <li>保留在完全重新加载页面期间丢失的应用程序状态。</li>
@@ -1000,7 +1147,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p>在开发环境，可以将 HMR 作为 LiveReload 的替代。<a href="/configuration/dev-server/">webpack-dev-server</a> 支持 <code>hot</code> 模式，在试图重新加载整个页面之前，<code>hot</code> 模式会尝试使用 HMR 来更新。更多细节请查看 <a href="/guides/hot-module-replacement">模块热替换</a> 指南。</p>
 <blockquote class="tip"><div class="tip-content"> 与许多其他功能一样，webpack 的强大之处在于它的可定制化。取决于特定项目需求，会有<em>许多方式</em>来配置 HMR。然而，对于多数项目的实现目的来说，<code>webpack-dev-server</code> 都能够很好适应，可以帮助你在项目中快速应用 HMR。 </div></blockquote></div>
-<br/><h1>配置</h1>
+<div class="break-after"></div><h1>配置</h1>
 <div><p>webpack 开箱即用，可以无需使用任何配置文件。然而，webpack 会假定项目的入口起点为 <code>src/index</code>，然后会在 <code>dist/main.js</code> 输出结果，并且在生产环境开启压缩和优化。</p>
 <p>通常，你的项目还需要继续扩展此能力，为此你可以在项目根目录下创建一个 <code>webpack.config.js</code> 文件，webpack 会自动使用它。</p>
 <p>下面指定了所有可用的配置选项。</p>
@@ -1348,7 +1495,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <p><a href="https://generatewebpackconfig.netlify.com/">Generate Custom Webpack Configuration</a> is an interactive portal you can play around by selecting custom webpack configuration options tailored for your frontend project. It automatically generates a minimal webpack configuration based on your selection of loaders/plugins, etc.</p>
 <p><a href="https://webpack.jakoblind.no/">Visual tool for creating webpack configs</a> is an online configuration tool for creating webpack configuration file where you can select any combination of features you need. It also generates a full example project based on your webpack configs.</p>
 </div>
-<br/><h1>使用不同语言进行配置(configuration languages)</h1>
+<div class="break-after"></div><h1>使用不同语言进行配置(configuration languages)</h1>
 <div><p>webpack 接受以多种编程和数据语言编写的配置文件。支持的文件扩展名列表，可以在 <a href="https://github.com/js-cli/js-interpret">node-interpret</a> 包中找到。使用 <a href="https://github.com/js-cli/js-interpret">node-interpret</a>，webpack 可以处理许多不同类型的配置文件。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#typescript" id="typescript"></a>
@@ -1478,7 +1625,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <blockquote class="warning"><div class="tip-content"> 如果你在其他地方也使用了 Babel 并且把<code>模块(modules)</code>设置为了 <code>false</code>，那么你要么同时维护两份单独的 <code>.babelrc</code> 文件，要么使用 <code>conts jsxobj = requrie('jsxobj');</code> 并且使用 <code>moduel.exports</code> 而不是新版本的 <code>import</code> 和 <code>export</code> 语法。这是因为尽管 Node.js 已经支持了许多 ES6 的新特性，然而还无法支持 ES6 模块语法。 </div></blockquote></div>
-<br/><h1>多种配置类型(configuration types)</h1>
+<div class="break-after"></div><h1>多种配置类型(configuration types)</h1>
 <div><p>除了导出单个配置对象，还有一些方式满足其他需求。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#导出为一个函数" id="导出为一个函数"></a>
@@ -1548,7 +1695,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre>
 <blockquote class="tip"><div class="tip-content"> If you pass a name to <a href="/api/cli/#config-options"><code>--config-name</code></a> flag, webpack will only build that specific configuration. </div></blockquote></div>
-<br/><h1>入口和上下文(entry and context)</h1>
+<div class="break-after"></div><h1>入口和上下文(entry and context)</h1>
 <div><p>entry 对象是用于 webpack 查找启动并构建 bundle。其上下文是入口文件所处的目录的绝对路径的字符串。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#context" id="context"></a>
@@ -1618,7 +1765,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </code></pre>
 <p>当结合 <a href="/configuration/output#output-library"><code>output.library</code></a> 选项时：如果传入数组，则只导出最后一项。</p>
 </div>
-<br/><h1>输出(output)</h1>
+<div class="break-after"></div><h1>输出(output)</h1>
 <div><p><code>output</code> 位于对象最顶级键(key)，包括了一组选项，指示 webpack 如何去输出、以及在哪里输出你的「bundle、asset 和其他你所打包或使用 webpack 载入的任何内容」。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#output-auxiliarycomment" id="output-auxiliarycomment"></a>
@@ -2547,7 +2694,7 @@ global<span class="token punctuation">.</span>MyLibrary<span class="token punctu
 </code></pre>
 <p>会对 UMD 的构建过程中的 AMD 模块进行命名。否则就使用匿名的 <code>define</code>。</p>
 </div>
-<br/><h1>模块(module)</h1>
+<div class="break-after"></div><h1>模块(module)</h1>
 <div><p>这些选项决定了如何处理项目中的<a href="/concepts/modules">不同类型的模块</a>。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#module-noparse" id="module-noparse"></a>
@@ -3020,7 +3167,7 @@ global<span class="token punctuation">.</span>MyLibrary<span class="token punctu
 <li><code>strictExportPresence</code> makes missing exports an error instead of warning</li>
 </ul>
 </div>
-<br/><h1>解析(resolve)</h1>
+<div class="break-after"></div><h1>解析(resolve)</h1>
 <div><p>这些选项能设置模块如何被解析。webpack 提供合理的默认值，但是还是可能会修改一些解析的细节。关于 resolver 具体如何工作的更多解释说明，请查看<a href="/concepts/module-resolution">模块解析</a>。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#resolve" id="resolve"></a>
@@ -3649,7 +3796,7 @@ global<span class="token punctuation">.</span>MyLibrary<span class="token punctu
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>优化(optimization)</h1>
+<div class="break-after"></div><h1>优化(optimization)</h1>
 <div><p>从 webpack 4 开始，会根据你选择的 <a href="/concepts/mode/"><code>mode</code></a> 来执行不同的优化，不过所有的优化还是可以手动配置和重写。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#optimization-minimize" id="optimization-minimize"></a>
@@ -4176,7 +4323,7 @@ By default <code>optimization.concatenateModules</code> is enabled in <code>prod
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>插件(plugins)</h1>
+<div class="break-after"></div><h1>插件(plugins)</h1>
 <div><p><code>plugins</code> 选项用于以各种方式自定义 webpack 构建过程。webpack 附带了各种内置插件，可以通过 <code>webpack.[plugin-name]</code> 访问这些插件。请查看 <a href="/plugins">插件页面</a> 获取插件列表和对应文档，但请注意这只是其中一部分，社区中还有许多插件。</p>
 <blockquote class="tip"><div class="tip-content"> 注意：本页面仅讨论使用插件，如果你有兴趣编写自己的插件，请访问 <a href="/contribute/writing-a-plugin/">编写一个插件</a> 页面。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#plugins" id="plugins"></a>
@@ -4222,7 +4369,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>开发中 server(devServer)</h1>
+<div class="break-after"></div><h1>开发中 server(devServer)</h1>
 <div><p><a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> 能够用于快速开发应用程序。起步请查看 <a href="/guides/development/">开发</a> 指南。</p>
 <p>此页面描述影响 webpack-dev-server(简写为：dev-server) 行为的选项。</p>
 <blockquote class="tip"><div class="tip-content"> 与 <a href="https://github.com/webpack/webpack-dev-middleware">webpack-dev-middleware</a> 兼容的选项旁边有 🔑。 </div></blockquote><h2 class="header">
@@ -5165,7 +5312,7 @@ webpack 的服务路径是 /build/
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>devtool</h1>
+<div class="break-after"></div><h1>devtool</h1>
 <div><p>此选项控制是否生成，以及如何生成 source map。</p>
 <p>使用 <a href="/plugins/source-map-dev-tool-plugin"><code>SourceMapDevToolPlugin</code></a> 进行更细粒度的配置。查看 <a href="/loaders/source-map-loader"><code>source-map-loader</code></a> 来处理已有的 source map。</p>
 <h2 class="header">
@@ -5684,7 +5831,7 @@ webpack 的服务路径是 /build/
 <blockquote class="warning"><div class="tip-content"> 你应该将你的服务器配置为，不允许普通用户访问 source map 文件！ </div></blockquote><p><code>hidden-source-map</code> - 与 <code>source-map</code> 相同，但不会为 bundle 添加引用注释。如果你只想 source map 映射那些源自错误报告的错误堆栈跟踪信息，但不想为浏览器开发工具暴露你的 source map，这个选项会很有用。</p>
 <blockquote class="warning"><div class="tip-content"> 你不应将 source map 文件部署到 web 服务器。而是只将其用于错误报告工具。 </div></blockquote><p><code>nosources-source-map</code> - 创建的 source map 不包含 <code>sourcesContent(源代码内容)</code>。它可以用来映射客户端上的堆栈跟踪，而无须暴露所有的源代码。你可以将 source map 文件部署到 web 服务器。</p>
 <blockquote class="warning"><div class="tip-content"> 这仍然会暴露反编译后的文件名和结构，但它不会暴露原始代码。 </div></blockquote><blockquote class="tip"><div class="tip-content"> 在使用 <code>terser-webpack-plugin</code> 时，你必须提供 <code>sourceMap：true</code> 选项来启用 source map 支持。 </div></blockquote></div>
-<br/><h1>构建目标(targets)</h1>
+<div class="break-after"></div><h1>构建目标(targets)</h1>
 <div><p>webpack 能够为多种环境或 <em>target</em> 构建编译。想要理解什么是 <code>target</code> 的详细信息，请阅读 <a href="/concepts/targets/">target 概念页面</a>。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#target" id="target"></a>
@@ -5831,7 +5978,7 @@ webpack 的服务路径是 /build/
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>watch 和 watchOptions</h1>
+<div class="break-after"></div><h1>watch 和 watchOptions</h1>
 <div><p>webpack 可以监听文件变化，当它们修改后会重新编译。这个页面介绍了如何启用这个功能，以及当 watch 无法正常运行的时候你可以做的一些调整。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#watch" id="watch"></a>
@@ -5974,7 +6121,7 @@ webpack 的服务路径是 /build/
 </h3>
 <p>使用 JetBrains WebStorm IDE 时，你可能会发现保存修改过的文件，并不会按照预期触发观察者。尝试在设置中禁用<code>安全写入(safe write)</code>选项，该选项确定在原文件被覆盖之前，文件是否先保存到临时位置：取消选中 <code>File &gt; {Settings|Preferences} &gt; Appearance &amp; Behavior &gt; System Settings &gt; Use "safe write" (save changes to a temporary file first)</code>。</p>
 </div>
-<br/><h1>外部扩展(externals)</h1>
+<div class="break-after"></div><h1>外部扩展(externals)</h1>
 <div><p><code>externals</code> 配置选项提供了「从输出的 bundle 中排除依赖」的方法。相反，所创建的 bundle 依赖于那些存在于用户环境(consumer's environment)中的依赖。此功能通常对 <strong>library 开发人员</strong>来说是最有用的，然而也会有各种各样的应用程序用到它。</p>
 <blockquote class="tip"><div class="tip-content"> <strong>用户(consumer)</strong>，在这里是指，引用了「使用 webpack 打包的 library」的所有终端用户的应用程序(end user application)。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#externals" id="externals"></a>
@@ -6129,7 +6276,7 @@ webpack 的服务路径是 /build/
 </code></pre>
 <p>关于如何使用此 externals 配置的更多信息，请参考<a href="/guides/author-libraries">如何编写 library</a>。</p>
 </div>
-<br/><h1>Node.js</h1>
+<div class="break-after"></div><h1>Node.js</h1>
 <div><p>这些选项可以配置是否 polyfill 或 mock 某些 <a href="https://nodejs.org/docs/latest/api/globals.html">Node.js 全局变量</a>和模块。这可以使最初为 Node.js 环境编写的代码，在其他环境（如浏览器）中运行。</p>
 <p>此功能由 webpack 内部的 <a href="https://github.com/webpack/webpack/blob/master/lib/NodeStuffPlugin.js"><code>NodeStuffPlugin</code></a> 插件提供。如果 target 是 "web"（默认）或 "webworker"，那么 <a href="https://github.com/webpack/webpack/blob/master/lib/node/NodeSourcePlugin.js"><code>NodeSourcePlugin</code></a> 插件也会被激活。</p>
 <h2 class="header">
@@ -6245,7 +6392,7 @@ webpack 的服务路径是 /build/
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>性能(performance)</h1>
+<div class="break-after"></div><h1>性能(performance)</h1>
 <div><p>这些选项可以控制 webpack 如何通知「资源(asset)和入口起点超过指定文件限制」。
 此功能受到 <a href="https://github.com/webpack/webpack/issues/3216">webpack 性能评估</a>的启发。</p>
 <h2 class="header">
@@ -6338,7 +6485,7 @@ webpack 的服务路径是 /build/
 </code></pre>
 <p>以上示例将只给出 <code>.js</code> 文件的性能提示。</p>
 </div>
-<br/><h1>统计信息(stats)</h1>
+<div class="break-after"></div><h1>统计信息(stats)</h1>
 <div><p>如果你不希望使用 <code>quiet</code> 或 <code>noInfo</code> 这样的不显示信息，而是又不想得到全部的信息，只是想要获取某部分 bundle 的信息，使用 stats 选项是比较好的折衷方式。</p>
 <blockquote class="tip"><div class="tip-content"> 对于 webpack-dev-server，这个属性要放在 <code>devServer</code> 对象里。 </div></blockquote><blockquote class="warning"><div class="tip-content"> 在使用 Node.js API 时，此选项无效。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#stats" id="stats"></a>
@@ -6660,7 +6807,7 @@ webpack 的服务路径是 /build/
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>其它选项(other options)</h1>
+<div class="break-after"></div><h1>其它选项(other options)</h1>
 <div><p>这里是 webpack 支持的其它选项。</p>
 <blockquote class="warning"><div class="tip-content"> 寻求帮助：这个页面还在更新中，如果你发现本页面内有描述不准确或者不完整，请在 <a href="https://github.com/webpack/webpack.js.org">webpack 的文档仓库</a>中创建 issue 或者 pull request </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#amd" id="amd"></a>
@@ -6787,7 +6934,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>引导</h1>
+<div class="break-after"></div><h1>引导</h1>
 <div><p>可以使用各种接口来定制化编译过程。
 一些特性会在几个接口之间重叠，例如，其中一些配置选项可能会从 CLI 标记(flag)中获取，
 而另一些配置选项，则只能从单个接口获取。
@@ -6841,7 +6988,7 @@ loader 被编写为，接受源代码作为参数的函数，
 插件能够完全访问到编译(compilation)的当前状态。</p>
 <p><a href="/api/plugins">了解更多关于插件的信息！</a></p>
 </div>
-<br/><h1>命令行接口</h1>
+<div class="break-after"></div><h1>命令行接口</h1>
 <div><p>为了更合适且方便地使用配置，可以在 <code>webpack.config.js</code> 中对 webpack 进行配置。CLI 中传入的任何参数会在配置文件中映射为对应的参数。</p>
 <p>如果你还没有安装过 webpack 和 CLI，请先阅读 <a href="/guides/installation">安装指南</a>。</p>
 <h2 class="header">
@@ -8748,7 +8895,7 @@ webpack --env.platform<span class="token operator">=</span>web  <span class="tok
 ⋮
 </code></pre>
 </div>
-<br/><h1>包含统计数据的文件</h1>
+<div class="break-after"></div><h1>包含统计数据的文件</h1>
 <div><p>通过 webpack 编译源文件时，用户可以生成包含有关于模块的统计数据的 JSON 文件。这些统计数据不仅可以帮助开发者来分析应用的依赖图表，还可以优化编译的速度。这个 JSON 文件可以通过以下的命令来生成:</p>
 <pre><code class="lang-bash">webpack --profile --json <span class="token operator">&gt;</span> compilation-stats.json
 </code></pre>
@@ -8907,7 +9054,7 @@ Critical dependencies:
  @ <span class="token punctuation">..</span>/cases/parsing/browserify/index.js 2:114-121
 </code></pre>
 <blockquote class="warning"><div class="tip-content"> 需要注意的是，当 <code>错误详情为false(errorDetails:false)</code>传入<code>toJson</code>函数时，对栈的追溯就不会被显示。<code>错误详情(errorDetils)</code> 默认值为 <code>true</code> </div></blockquote></div>
-<br/><h1>Node.js API</h1>
+<div class="break-after"></div><h1>Node.js API</h1>
 <div><p>webpack 提供了 Node.js API，可以在 Node.js 运行时下直接使用。</p>
 <p>当你需要自定义构建或开发流程时，Node.js API 非常有用，因为此时所有的报告和错误处理都必须自行实现，webpack 仅仅负责编译的部分。所以 <a href="/configuration/stats"><code>stats</code></a> 配置选项不会在 <code>webpack()</code> 调用中生效。</p>
 <h2 class="header">
@@ -9156,7 +9303,7 @@ compiler<span class="token punctuation">.</span><span class="token function">run
 </code></pre>
 <p>值得一提的是，被 <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> 及众多其他包依赖的 <a href="https://github.com/webpack/webpack-dev-middleware">webpack-dev-middleware</a> 就是通过这种方式，将你的文件神秘地隐藏起来，但却仍然可以用它们为浏览器提供服务！</p>
 <blockquote class="tip"><div class="tip-content"> 你指定的输出文件系统需要兼容 Node 自身的 <a href="https://nodejs.org/api/fs.html"><code>fs</code></a> 模块接口，接口需要提供 <code>mkdirp</code> 和 <code>join</code> 工具方法。 </div></blockquote></div>
-<br/><h1>模块热替换</h1>
+<div class="break-after"></div><h1>模块热替换</h1>
 <div><p>如果已经通过 <a href="/plugins/hot-module-replacement-plugin"><code>HotModuleReplacementPlugin</code></a> 启用了<a href="/concepts/hot-module-replacement">模块热替换(Hot Module Replacement)</a>，则它的接口将被暴露在 <a href="/api/module-variables#module-hot-webpack-specific-"><code>module.hot</code> 属性</a>下面。通常，用户先要检查这个接口是否可访问，然后再开始使用它。举个例子，你可以这样 <code>accept</code> 一个更新的模块：</p>
 <pre><code class="lang-js"><span class="token keyword">if</span> <span class="token punctuation">(</span>module<span class="token punctuation">.</span>hot<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   module<span class="token punctuation">.</span>hot<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token string">'./library.js'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -9442,7 +9589,7 @@ compiler<span class="token punctuation">.</span><span class="token function">run
 <pre><code class="lang-js">module<span class="token punctuation">.</span>hot<span class="token punctuation">.</span><span class="token function">removeStatusHandler</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>loader API</h1>
+<div class="break-after"></div><h1>loader API</h1>
 <div><p>所谓 loader 只是一个导出为函数的 JavaScript 模块。<a href="https://github.com/webpack/loader-runner">loader runner</a> 会调用这个函数，然后把上一个 loader 产生的结果或者资源文件(resource file)传入进去。函数的 <code>this</code> 上下文将由 webpack 填充，并且 <a href="https://github.com/webpack/loader-runner">loader runner</a> 具有一些有用方法，可以使 loader 改变为异步调用方式，或者获取 query 参数。</p>
 <p>第一个 loader 的传入参数只有一个：资源文件(resource file)的内容。compiler 需要得到最后一个 loader 产生的处理结果。这个处理结果应该是 <code>String</code> 或者 <code>Buffer</code>（被转换为一个 string），代表了模块的 JavaScript 源码。另外还可以传递一个可选的 SourceMap 结果（格式为 JSON 对象）。</p>
 <p>如果是单个处理结果，可以在<strong>同步模式</strong>中直接返回。如果有多个处理结果，则必须调用 <code>this.callback()</code>。在<strong>异步模式</strong>中，必须调用 <code>this.async()</code>，来指示 <a href="https://github.com/webpack/loader-runner">loader runner</a> 等待异步结果，它会返回 <code>this.callback()</code> 回调函数，随后 loader 必须返回 <code>undefined</code> 并且调用该回调函数。</p>
@@ -9974,7 +10121,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>模块方法</h1>
+<div class="break-after"></div><h1>模块方法</h1>
 <div><p>本节涵盖了使用 webpack 编译代码的所有方法。在 webpack 打包应用程序时，你可以选择各种模块语法风格，包括 <a href="https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015">ES6</a>, <a href="https://en.wikipedia.org/wiki/CommonJS">CommonJS</a> 和 <a href="https://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a>。</p>
 <blockquote class="warning"><div class="tip-content"> 虽然 webpack 支持多种模块语法，但我们建议尽量遵循一致的语法，避免一些奇怪的行为和 bug。这是一个混合使用了 ES6 和 CommonJS 的<a href="https://github.com/webpack/webpack.js.org/issues/552">示例</a>，但我们确定还有其他的 BUG 会产生。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#es6-推荐-" id="es6-推荐-"></a>
@@ -10290,7 +10437,7 @@ require<span class="token punctuation">.</span><span class="token function">ensu
 __webpack_modules__<span class="token punctuation">[</span>require<span class="token punctuation">.</span><span class="token function">resolveWeak</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`./page/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>page<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre>
 <blockquote class="tip"><div class="tip-content"> <code>require.resolveWeak</code> 是<em>通用渲染</em>（SSR + 代码分离）的基础，例如在 <a href="https://github.com/faceyspacey/react-universal-component">react-universal-component</a> 等包中的用法。它允许代码在服务器端和客户端初始页面的加载上同步渲染。它要求手动或以某种方式提供 chunk。它可以在不需要指示应该被打包的情况下引入模块。它与 <code>import()</code> 一起使用，当用户导航触发额外的导入时，它会被接管。 </div></blockquote></div>
-<br/><h1>模块变量</h1>
+<div class="break-after"></div><h1>模块变量</h1>
 <div><p>本章节涵盖了使用 webpack 编译的代码中所有的<strong>变量</strong>。模块将通过 <code>module</code> 和其他变量，来访问编译过程中的某些数据。</p>
 <h3 class="header">
 <a aria-hidden="true" class="anchor" href="#module-loaded-nodejs-" id="module-loaded-nodejs-"></a>
@@ -10430,7 +10577,7 @@ exports<span class="token punctuation">.</span>aFunction <span class="token oper
 </h3>
 <p>等同于配置选项中的 <code>debug</code>。</p>
 </div>
-<br/><h1>Plugin API</h1>
+<div class="break-after"></div><h1>Plugin API</h1>
 <div><p>插件是 webpack 生态系统的重要组成部分，为社区用户提供了一种强大方式来直接触及 webpack 的编译过程(compilation process)。插件能够 <a href="/api/compiler-hooks/#hooks">钩入(hook)</a> 到在每个编译(compilation)中触发的所有关键事件。在编译的每一步，插件都具备完全访问 <code>compiler</code> 对象的能力，如果情况合适，还可以访问当前 <code>compilation</code> 对象。</p>
 <blockquote class="tip"><div class="tip-content"> 对于编写插件的高度概括，请从<a href="/contribute/writing-a-plugin">编写一个插件</a>开始。 </div></blockquote><p>我们首先回顾 <code>tapable</code> 工具，它提供了 webpack 插件接口的支柱。</p>
 <h2 class="header">
@@ -10520,7 +10667,7 @@ compiler<span class="token punctuation">.</span>hooks<span class="token punctuat
 </h2>
 <p>查看 <a href="/api/compiler-hooks/">compiler hooks</a> 部分，了解所有可用的 <code>compiler</code> 钩子和其所需的参数的详细列表。</p>
 </div>
-<br/><h1>compiler 钩子</h1>
+<div class="break-after"></div><h1>compiler 钩子</h1>
 <div><p><code>Compiler</code> 模块是 webpack 的支柱引擎，它通过 <a href="/api/cli">CLI</a> 或 <a href="/api/node">Node API</a> 传递的所有选项，创建出一个 compilation 实例。它扩展(extend)自 <code>Tapable</code> 类，以便注册和调用插件。大多数面向用户的插件首，会先在 <code>Compiler</code> 上注册。</p>
 <blockquote class="tip"><div class="tip-content"> 此模块会暴露在 <code>webpack.Compiler</code>，可以直接通过这种方式使用。关于更多信息，请查看<a href="https://github.com/pksjce/webpack-internal-examples/tree/master/compiler-example">这个示例</a>。 </div></blockquote><p>在为 webpack 开发插件时，你可能需要知道每个钩子函数是在哪里调用的。想要了解这些，请在 webpack 源码中搜索 <code>hooks.&lt;hook name&gt;.call</code>。</p>
 <h2 class="header">
@@ -10719,7 +10866,7 @@ compiler<span class="token punctuation">.</span>hooks<span class="token punctuat
 <p><code>SyncHook</code></p>
 <p>监听模式停止。</p>
 </div>
-<br/><h1>compilation 钩子</h1>
+<div class="break-after"></div><h1>compilation 钩子</h1>
 <div><p><code>Compilation</code> 模块会被 <code>Compiler</code> 用来创建新的编译（或新的构建）。<code>compilation</code> 实例能够访问所有的模块和它们的依赖（大部分是循环依赖）。它会对应用程序的依赖图中所有模块进行字面上的编译(literal compilation)。在编译阶段，模块会被加载(loaded)、封存(sealed)、优化(optimized)、分块(chunked)、哈希(hashed)和重新创建(restored)。</p>
 <p><code>Compilation</code> 类扩展(extend)自 <code>Tapable</code>，并提供了以下生命周期钩子。可以按照 compiler 钩子的相同方式，调用 tap：</p>
 <pre><code class="lang-js">compilation<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>someHook<span class="token punctuation">.</span><span class="token function">tap</span><span class="token punctuation">(</span><span class="token comment">/* ... */</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -11280,7 +11427,7 @@ compiler<span class="token punctuation">.</span>hooks<span class="token punctuat
 <p><code>Compilation.hooks.dependencyReference(depRef, dependency, module)</code> allows to change the references reported by dependencies.</p>
 <p>Parameters: <code>depRef</code> <code>dependency</code> <code>module</code></p>
 </div>
-<br/><h1>resolver</h1>
+<div class="break-after"></div><h1>resolver</h1>
 <div><p>resolver 是由 <code>enhanced-resolve</code> package 创建出来的。<code>Resolver</code> 类继承了 <code>tapable</code> 类，并且使用 <code>tapable</code> 提供的一些钩子。可以直接使用 <code>enhanced-resolve</code> package 创建一些新的 resolver，然而，所有的 <a href="/api/node/#compiler-instance"><code>compiler</code> 实例</a> 都有一些可以接触(tap into)到的 resolver 实例。</p>
 <p>在继续阅读之前，请确保至少了解过 <a href="https://github.com/webpack/enhanced-resolve"><code>enhanced-resolve</code></a> 和 <a href="/api/plugins/#tapable"><code>tapable</code></a> 文档。</p>
 <h2 class="header">
@@ -11316,7 +11463,7 @@ compiler<span class="token punctuation">.</span>hooks<span class="token punctuat
 <p>上面提到的 resolver，也可以通过在配置文件使用 <a href="/configuration/resolve/"><code>resolve</code></a> 或 <a href="/configuration/resolve/#resolveloader"><code>resolveLoader</code></a> 选项来自定义。这些选项允许用户通过各种选项（包括解析 <code>plugins</code>），来改变解析行为。</p>
 <p>resolver 插件（例如 [<code>DirectoryNamedPlugin</code>] (<a href="https://github.com/shaketbaby/directory-named-webpack-plugin)）可以直接包含在">https://github.com/shaketbaby/directory-named-webpack-plugin)）可以直接包含在</a> <code>resolve.plugins</code> 中，而不是使用标准插件用法。注意，<code>resolve</code> 配置会影响 <code>normal</code> 和 <code>context</code> 这两个 resolver，而 <code>resolveLoader</code> 则用于修改 <code>loader</code> resolver。</p>
 </div>
-<br/><h1>parser</h1>
+<div class="break-after"></div><h1>parser</h1>
 <div><p><code>parser</code> 实例，是用来解析由 webpack 处理过的每个模块。<code>parser</code> 也是扩展自 <code>tapable</code> 的 webpack 类，并且提供多种 <code>tapable</code> 钩子，插件作者可以使用它来自定义解析过程。</p>
 <p>以下示例中，<code>parser</code> 位于 <a href="/api/compiler-hooks/#normalmodulefactory">normalModuleFactory</a> 这个中，因此需要调用额外钩子来进行获取：</p>
 <pre><code class="lang-js">compiler<span class="token punctuation">.</span>hooks<span class="token punctuation">.</span>normalModuleFactory<span class="token punctuation">.</span><span class="token function">tap</span><span class="token punctuation">(</span><span class="token string">'MyPlugin'</span><span class="token punctuation">,</span> factory <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
@@ -11589,12 +11736,12 @@ compiler<span class="token punctuation">.</span>hooks<span class="token punctuat
 <p>访问代码片段的抽象语法树(abstract syntax tree - AST)</p>
 <p>参数：<code>ast</code> <code>comments</code></p>
 </div>
-<br/><h1>指南</h1>
+<div class="break-after"></div><h1>指南</h1>
 <div><p>本指南章节包含有关理解和掌握 webpack 提供的各种工具和特性。首先，通过 <a href="/guides/installation">安装</a> 进行简单引入。</p>
 <p>指南会逐步带你由浅入深。本章节更多是作为一个切入点，一旦阅读完成后，你就会更加容易深入到实际的 <a href="/configuration">配置</a> 文档中。</p>
 <p>指南中运行 webpack 后显示的输出，可能和新版本的输出略有不同。这是意料之中的事情。只要 bundle 看起来接近，而且运行正常，那就没有问题。如果你遇到在新版本中，示例无法良好运行，请创建一个 issue，我们将尽力解决版本差异。</p>
 </div>
-<br/><h1>安装</h1>
+<div class="break-after"></div><h1>安装</h1>
 <div><p>本指南介绍了安装 webpack 的各种方法。</p>
 <h3 class="header">
 <a aria-hidden="true" class="anchor" href="#预先准备" id="预先准备"></a>
@@ -11639,7 +11786,7 @@ npm <span class="token function">install</span> --save-dev webpack@<span class="
 npm <span class="token function">install</span> webpack/webpack<span class="token comment">#&lt;tagname/branchname&gt;</span>
 </code></pre>
 <blockquote class="warning"><div class="tip-content"> 在安装这些最新体验版本时要小心！它们可能仍然包含 bug，因此不应该用于生产环境。 </div></blockquote></div>
-<br/><h1>起步</h1>
+<div class="break-after"></div><h1>起步</h1>
 <div><p>webpack 用于编译 JavaScript 模块。一旦完成 <a href="/guides/installation">安装</a>，你就可以通过 webpack <a href="/api/cli">CLI</a> 或 <a href="/api/node">API</a> 与其配合交互。如果你还不熟悉 webpack，请阅读 <a href="/concepts">核心概念</a> 和 <a href="/comparison">对比</a>，了解为什么要使用 webpack，而不是社区中的其他工具。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#基本安装" id="基本安装"></a>
@@ -11880,7 +12027,7 @@ You can also <span class="token keyword">set</span> it to <span class="token str
 </code></pre>
 <blockquote class="tip"><div class="tip-content"> 如果你使用的是 npm 5，你可能还会在目录中看到一个 <code>package-lock.json</code> 文件。 </div></blockquote><p>如果你想要了解 webpack 设计思想，你应该看下 <a href="/concepts">基本概念</a> 和 <a href="/configuration">配置</a> 页面。此外，<a href="/api">API</a> 章节可以深入了解 webpack 提供的各种接口。</p>
 </div>
-<br/><h1>管理资源</h1>
+<div class="break-after"></div><h1>管理资源</h1>
 <div><p>如果你是从开始一直遵循着指南的示例，现在会有一个小项目，显示 "Hello webpack"。现在我们尝试混合一些其他资源，比如 images，看看 webpack 如何处理。</p>
 <p>在 webpack 出现之前，前端开发人员会使用 grunt 和 gulp 等工具来处理资源，并将它们从 <code>/src</code> 文件夹移动到 <code>/dist</code> 或 <code>/build</code> 目录中。JavaScript 模块也遵循同样方式，但是，像 webpack 这样的工具，将<strong>动态打包</strong>所有依赖（创建所谓的 <a href="/concepts/dependency-graph">依赖图(dependency graph)</a>）。这是极好的创举，因为现在每个模块都可以<em>明确表述它自身的依赖</em>，可以避免打包未使用的模块。</p>
 <p>webpack 最出色的功能之一就是，除了引入 JavaScript，还可以通过 loader <em>引入任何其他类型的文件</em>。也就是说，以上列出的那些 JavaScript 的优点（例如显式依赖），同样可以用来构建 web 站点或 web 应用程序中的所有非 JavaScript 内容。让我们从 CSS 开始起步，或许你可能已经熟悉了下面这个设置。</p>
@@ -12400,7 +12547,7 @@ Entrypoint main <span class="token operator">=</span> bundle.js
 <li><a href="https://survivejs.com/webpack/loading/fonts/">Loading Fonts</a> on SurviveJS</li>
 </ul>
 </div>
-<br/><h1>管理输出</h1>
+<div class="break-after"></div><h1>管理输出</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南继续沿用 <a href="/guides/asset-management"><code>管理资源</code></a> 指南中的代码示例。 </div></blockquote><p>到目前为止，我们都是在 <code>index.html</code> 文件中手动引入所有资源，然而随着应用程序增长，并且一旦开始 <a href="/guides/caching">在文件名中使用 hash</a>] 并输出 <a href="/guides/code-splitting">多个 bundle</a>，如果继续手动管理 <code>index.html</code> 文件，就会变得困难起来。然而，通过一些插件可以使这个过程更容易管控。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#预先准备" id="预先准备"></a>
@@ -12573,7 +12720,7 @@ print.bundle.js  2.74 kB       1  <span class="token punctuation">[</span>emitte
 </h2>
 <p>现在，你已经了解如何向 HTML 动态添加 bundle，让我们深入 <a href="/guides/development">开发环境</a> 指南。或者如果你想要深入更多相关高级话题，我们推荐你前往 <a href="/guides/code-splitting">代码分离</a> 指南。</p>
 </div>
-<br/><h1>开发环境</h1>
+<div class="break-after"></div><h1>开发环境</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南继续沿用 <a href="/guides/output-management">管理输出</a> 指南中的代码示例。 </div></blockquote><p>如果你一直跟随之前的指南，应该对一些 webpack 基础知识有着很扎实的理解。在我们继续之前，先来看看如何设置一个开发环境，使我们的开发体验变得更轻松一些。</p>
 <blockquote class="warning"><div class="tip-content"> 本指南中的工具<strong>仅用于开发环境</strong>，请<strong>不要</strong>在生产环境中使用它们！ </div></blockquote><p>在开始前，我们先将 <a href="/concepts/mode/#mode-development"><code>mode</code> 设置为 <code>'development'</code></a>。</p>
 <p><strong>webpack.config.js</strong></p>
@@ -12907,7 +13054,7 @@ webpack: Compiled successfully.
 </h2>
 <p>现在，你已经学会了如何自动编译代码，并运行一个简单的 development server，查看下一个指南，其中将介绍 <a href="/guides/hot-module-replacement">模块热替换(hot module replacement)</a>。</p>
 </div>
-<br/><h1>模块热替换</h1>
+<div class="break-after"></div><h1>模块热替换</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南继续沿用 <a href="/guides/development">开发环境</a> 指南中的代码示例。 </div></blockquote><p>模块热替换(hot module replacement 或 HMR)是 webpack 提供的最有用的功能之一。它允许在运行时更新所有类型的模块，而无需完全刷新。本页面重点介绍其<strong>实现</strong>，而 <a href="/concepts/hot-module-replacement">概念</a> 页面提供了更多关于它的工作原理以及为什么它有用的细节。</p>
 <blockquote class="warning"><div class="tip-content"> <strong>HMR</strong> 不适用于生产环境，这意味着它应当用于开发环境。更多详细信息，请查看 <a href="/guides/production">生产环境</a> 指南。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#启用-hmr" id="启用-hmr"></a>
@@ -13175,7 +13322,7 @@ server<span class="token punctuation">.</span><span class="token function">liste
 <li><a href="https://github.com/gdi2290/angular-hmr">Angular HMR</a>：没有必要使用 loader！直接修改 NgModule 主文件就够了，它可以完全控制 HMR API。</li>
 </ul>
 <blockquote class="tip"><div class="tip-content"> 如果你知道任何其他 loader 或 plugin，能够有助于或增强模块热替换(hot module replacement)，请提交一个 pull request 以添加到此列表中！ </div></blockquote></div>
-<br/><h1>tree shaking</h1>
+<div class="break-after"></div><h1>tree shaking</h1>
 <div><p><em>tree shaking</em> 是一个术语，通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)。它依赖于 ES2015 模块语法的 <a href="http://exploringjs.com/es6/ch_modules.html#static-module-structure">静态结构</a> 特性，例如 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import"><code>import</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export"><code>export</code></a>。这个术语和概念实际上是由 ES2015 模块打包工具 <a href="https://github.com/rollup/rollup">rollup</a> 普及起来的。</p>
 <p>webpack 2 正式版本内置支持 ES2015 模块（也叫做 <em>harmony modules</em>）和未使用模块检测能力。新的 webpack 4 正式版本扩展了此检测能力，通过 <code>package.json</code> 的 <code>"sideEffects"</code> 属性作为标记，向 compiler 提供提示，表明项目中的哪些文件是 "pure(纯的 ES2015 模块)"，由此可以安全地删除文件中未使用的部分。</p>
 <blockquote class="tip"><div class="tip-content"> 本指南的继承自 <a href="/guides/getting-started">起步</a> 指南。如果你尚未阅读该指南，请先行阅读。 </div></blockquote><h2 class="header">
@@ -13330,7 +13477,7 @@ module.exports = {
 <p>你可以将应用程序想象成一棵树。绿色表示实际用到的 source code(源码) 和 library(库)，是树上活的树叶。灰色表示未引用代码，是秋天树上枯萎的树叶。为了除去死去的树叶，你必须摇动这棵树，使它们落下。</p>
 <p>如果你对优化输出很感兴趣，请进入到下个指南，来了解 <a href="/guides/production">生产环境</a> 构建的详细细节。</p>
 </div>
-<br/><h1>生产环境</h1>
+<div class="break-after"></div><h1>生产环境</h1>
 <div><p>在本指南中，我们将深入一些最佳实践和工具，将站点或应用程序构建到生产环境中。</p>
 <blockquote class="tip"><div class="tip-content"> 以下示例来源于 <a href="/guides/tree-shaking">tree shaking</a> 和 <a href="/guides/development">开发环境</a>。在继续之前，请确保你已经熟悉这些指南中所介绍的概念/配置。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#配置" id="配置"></a>
@@ -13512,7 +13659,7 @@ module.exports = {
 <p>以上所述也可以通过命令行实现。例如，<code>--optimize-minimize</code> 标记将在幕后引用 <code>TerserPlugin</code>。和以上描述的 <code>DefinePlugin</code> 实例相同，<code>--define process.env.NODE_ENV="'production'"</code> 也会做同样的事情。而且，<code>webpack -p</code> 将自动地配置上述这两个标记，从而调用需要引入的插件。</p>
 <p>虽然这种简短的方式很好，但通常我们建议只使用配置方式，因为在这两种方式中，配置方式能够更准确地理解现在正在做的事情。配置方式还为可以让你更加细微地控制这两个插件中的其他选项。</p>
 </div>
-<br/><h1>代码分离</h1>
+<div class="break-after"></div><h1>代码分离</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南继续沿用 <a href="/guides/getting-started">起步</a> 和 <a href="/guides/output-management">管理输出</a> 中的代码示例。请确保你已熟悉这些指南中提供的示例。 </div></blockquote><p>代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间。</p>
 <p>常用的代码分离方法有三种：</p>
 <ul>
@@ -13763,7 +13910,7 @@ Entrypoint index <span class="token operator">=</span> index.bundle.js
 </h2>
 <p>接下来，查看 <a href="/guides/lazy-loading">延迟加载</a> 来学习如何在实际一个真实应用程序中使用 <code>import()</code> 的具体示例，以及查看 <a href="/guides/caching">缓存</a> 来学习如何有效地分离代码。</p>
 </div>
-<br/><h1>懒加载</h1>
+<div class="break-after"></div><h1>懒加载</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南的继承自<a href="/guides/code-splitting">代码分离</a>。如果你尚未阅读该指南，请先行阅读。 </div></blockquote><p>懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#示例" id="示例"></a>
@@ -13840,7 +13987,7 @@ index.bundle.js     548 kB       1  <span class="token punctuation">[</span>emit
 <li>AngularJS: <a href="https://medium.com/@var_bin/angularjs-webpack-lazyload-bb7977f390dd">AngularJS + Webpack = lazyLoad</a> by <a href="https://twitter.com/var_bincom">@var_bincom</a></li>
 </ul>
 </div>
-<br/><h1>缓存</h1>
+<div class="break-after"></div><h1>缓存</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南继续沿用 <a href="/guides/getting-started">起步</a>、<a href="/guides/output-management">管理输出</a> 和 <a href="/guides/code-splitting">代码分离</a> 中的代码示例。 </div></blockquote><p>以上，我们使用 webpack 来打包模块化的应用程序，webpack 会生成一个可部署的 <code>/dist</code> 目录，然后把打包后的内容放置在此目录中。只要 <code>/dist</code> 目录中的内容部署到 server 上，client（通常是浏览器）就能够访问网站此 server 的网站及其资源。而最后一步获取资源是比较耗费时间的，这就是为什么浏览器使用一种名为 <a href="https://searchstorage.techtarget.com/definition/cache">缓存</a> 的技术。可以通过命中缓存，以降低网络流量，使网站加载速度更快，然而，如果我们在部署新版本时不更改资源的文件名，浏览器可能会认为它没有被更新，就会使用它的缓存版本。由于缓存的存在，当你需要获取新的代码时，就会显得很棘手。</p>
 <p>此指南的重点在于通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件。</p>
 <h2 class="header">
@@ -14112,7 +14259,7 @@ Entrypoint main <span class="token operator">=</span> runtime.725a1a51ede5ae0cfd
 </h2>
 <p>缓存可能很复杂，但是从应用程序或站点用户可以获得的收益来看，这值得付出努力。想要了解更多信息，请查看下面<em>进一步阅读</em>部分。</p>
 </div>
-<br/><h1>创建 library</h1>
+<div class="break-after"></div><h1>创建 library</h1>
 <div><p>除了打包应用程序，webpack 还可以用于打包 JavaScript library。以下指南适用于希望简化打包策略的 library 作者。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#创建一个-library" id="创建一个-library"></a>
@@ -14381,7 +14528,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <p>这里的 key(键) <code>main</code> 是参照 <a href="https://docs.npmjs.com/files/package.json#main"><code>package.json</code> 标准</a>，而 <code>module</code> 是参照 <a href="https://github.com/dherman/defense-of-dot-js/blob/master/proposal.md">一个</a><a href="https://github.com/rollup/rollup/wiki/pkg.module">提案</a>，此提案允许 JavaScript 生态系统升级使用 ES2015 模块，而不会破坏向后兼容性。</p>
 <blockquote class="warning"><div class="tip-content"> <code>module</code> 属性应指向一个使用 ES2015 模块语法（而不是其他浏览器或 Node.js 尚不支持的模块语法）的脚本。这使得 webpack 本身就可以解析模块语法，如果用户只用到 library 的某些部分，可以通过 <a href="https://webpack.js.org/guides/tree-shaking/">tree shaking</a> 打包更轻量的包。 </div></blockquote><p>现在，你可以 <a href="https://docs.npmjs.com/getting-started/publishing-npm-packages">将其发布为一个 npm package</a>，并且在 <a href="https://unpkg.com/#/">unpkg.com</a> 找到它，并分发给你的用户。</p>
 <blockquote class="tip"><div class="tip-content"> 为了暴露和 library 关联着的样式表，你应该使用 <a href="/plugins/extract-text-webpack-plugin"><code>MiniCssExtractPlugin</code></a>。然后，用户可以像使用其他样式表一样使用和加载这些样式表。 </div></blockquote></div>
-<br/><h1>shim 预置依赖</h1>
+<div class="break-after"></div><h1>shim 预置依赖</h1>
 <div><p><code>webpack</code> compiler 能够识别遵循 ES2015 模块语法、CommonJS 或 AMD 规范编写的模块。然而，一些 third party(第三方库) 可能会引用一些全局依赖（例如 <code>jQuery</code> 中的 <code>$</code>）。因此这些 library 也可能会创建一些需要导出的全局变量。这些 "broken modules(不符合规范的模块)" 就是 <em>shim(预置依赖)</em> 发挥作用的地方。</p>
 <blockquote class="warning"><div class="tip-content"> <strong>我们不推荐使用全局依赖！</strong>webpack 背后的整个理念是使前端开发更加模块化。也就是说，需要编写具有良好的封闭性(well contained)、不依赖于隐含依赖（例如，全局变量）的彼此隔离的模块。请只在必要的时候才使用这些特性。 </div></blockquote><p><em>shim</em> 另外一个极其有用的使用场景就是：当你希望 <a href="https://en.wikipedia.org/wiki/Polyfill_(programming">polyfill</a> 扩展浏览器能力，来支持到更多用户时。在这种情况下，你可能只是想要将这些 polyfills 提供给需要修补(patch)的浏览器（也就是实现按需加载）。</p>
 <p>下面的文章将向我们展示这两种用例。</p>
@@ -14745,7 +14892,7 @@ bundle.js  544 kB       0  <span class="token punctuation">[</span>emitted<span 
 <blockquote class="warning"><div class="tip-content"> 任何需要 AST 的功能（例如 <code>ProvidePlugin</code>）都不起作用。 </div></blockquote><p>最后，一些模块支持多种 <a href="/concepts/modules">模块格式</a>，例如一个混合有 AMD、CommonJS 和 legacy(遗留) 的模块。在大多数这样的模块中，会首先检查 <code>define</code>，然后使用一些怪异代码导出一些属性。在这些情况下，可以通过 <a href="/loaders/imports-loader/"><code>imports-loader</code></a> 设置 <code>define=&gt;false</code> 来强制 CommonJS 路径。</p>
 <hr/>
 <blockquote class="tip"><div class="tip-content"> 译者注：shim 是一个库(library)，它将一个新的 API 引入到一个旧的环境中，而且仅靠旧的环境中已有的手段实现。polyfill 就是一个用在浏览器 API 上的 shim。我们通常的做法是先检查当前浏览器是否支持某个 API，如果不支持的话就按需加载对应的 polyfill。然后新旧浏览器就都可以使用这个 API 了。 </div></blockquote></div>
-<br/><h1>渐进式网络应用程序</h1>
+<div class="break-after"></div><h1>渐进式网络应用程序</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南继续沿用 <a href="/guides/output-management">管理输出</a> 中的代码示例。 </div></blockquote><p>渐进式网络应用程序(progressive web application - PWA)，是一种可以提供类似于native app(原生应用程序) 体验的 web app(网络应用程序)。PWA 可以用来做很多事。其中最重要的是，在<strong>离线(offline)</strong>时应用程序能够继续运行功能。这是通过使用名为 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/">Service Workers</a> 的 web 技术来实现的。</p>
 <p>本章将重点介绍，如何为我们的应用程序添加离线体验。我们将使用名为 <a href="https://github.com/GoogleChrome/workbox">Workbox</a> 的 Google 项目来实现此目的，该项目提供的工具可帮助我们更简单地为 web app 提供离线支持。</p>
 <h2 class="header">
@@ -14860,7 +15007,7 @@ precache-manifest.b5ca1c555e832d6fbf9462efd29d27eb.js  268 bytes          <span 
 </h2>
 <p>你已经使用 Workbox 项目构建了一个离线应用程序。开始进入将 web app 改造为 PWA 的旅程。你现在可能想要考虑下一步做什么。这里谷歌提供的 <a href="https://developers.google.com/web/progressive-web-apps/">PWA</a> 文档中可以找到一些不错的资源。</p>
 </div>
-<br/><h1>TypeScript</h1>
+<div class="break-after"></div><h1>TypeScript</h1>
 <div><blockquote class="tip"><div class="tip-content"> 本指南继续沿用 <a href="/guides/getting-started/">_起步_</a> 中的代码示例。 </div></blockquote><p><a href="https://www.typescriptlang.org">TypeScript</a> 是 JavaScript 的超集，为其增加了类型系统，可以编译为普通 JavaScript 代码。这篇指南里我们将会学习是如何将 webpack 和 TypeScript 进行集成。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#基础配置" id="基础配置"></a>
@@ -15007,7 +15154,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <blockquote class="warning"><div class="tip-content"> 这可能会降低构建性能。 </div></blockquote><p>关于构建工具，请查看 <a href="/guides/build-performance/">构建性能</a> 指南。</p>
 </div>
-<br/><h1>环境变量</h1>
+<div class="break-after"></div><h1>环境变量</h1>
 <div><p>想要消除 <a href="/guides/development">开发环境</a> 和 <a href="/guides/production">生产环境</a> 之间的 <code>webpack.config.js</code> 差异，你可能需要环境变量(environment variable)。</p>
 <p>webpack 命令行 <a href="/api/cli/#environment-options">环境配置</a> 的 <code>--env</code> 参数，可以允许你传入任意数量的环境变量。而在 <code>webpack.config.js</code> 中可以访问到这些环境变量。例如，<code>--env.production</code> 或 <code>--env.NODE_ENV=local</code>（<code>NODE_ENV</code> 通常约定用于定义环境类型，查看 <a href="https://dzone.com/articles/what-you-should-know-about-node-env">这里</a>）。</p>
 <pre><code class="lang-bash">webpack --env.NODE_ENV<span class="token operator">=</span>local --env.production --progress
@@ -15031,7 +15178,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>构建性能</h1>
+<div class="break-after"></div><h1>构建性能</h1>
 <div><p>本指南包含一些改进构建/编译性能的实用技巧。</p>
 <hr/>
 <h2 class="header">
@@ -15317,7 +15464,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <li><code>node-sass</code> 中有个来自 Node.js 线程池的阻塞线程的 bug。 当使用 <code>thread-loader</code> 时，需要设置 <code>workerParallelJobs: 2</code>。</li>
 </ul>
 </div>
-<br/><h1>内容安全策略</h1>
+<div class="break-after"></div><h1>内容安全策略</h1>
 <div><p>webpack 能够为其加载的所有脚本添加 <code>nonce</code>。要启用此功能，需要在引入的入口脚本中设置一个 <code>__webpack_nonce__</code> 变量。应该为每个唯一的页面视图生成和提供一个唯一的基于 hash 的 nonce，这就是为什么 <code>__webpack_nonce__</code> 要在入口文件中指定，而不是在配置中指定的原因。注意，<code>nonce</code> 应该是一个 base64 编码的字符串。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#示例" id="示例"></a>
@@ -15339,7 +15486,7 @@ __webpack_nonce__ <span class="token operator">=</span> <span class="token strin
 </code></pre>
 <p>有关 CSP 和 <code>nonce</code> 属性的更多信息，请查看页面底部的<strong>进一步阅读</strong>部分。</p>
 </div>
-<br/><h1>开发 - Vagrant</h1>
+<div class="break-after"></div><h1>开发 - Vagrant</h1>
 <div><p>如果你在开发一个更加高级的项目，并且使用 <a href="https://www.vagrantup.com/">Vagrant</a> 来实现在虚拟机(Virtual Machine)上运行你的开发环境，那你可能会需要在虚拟机中运行 webpack。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#配置项目" id="配置项目"></a>
@@ -15419,7 +15566,7 @@ __webpack_nonce__ <span class="token operator">=</span> <span class="token strin
 </h2>
 <p>我们能够从静态 IP 访问 Vagrant box，然后使 webpack-dev-server 可以公开访问，以便浏览器可以访问到它。然后，我们解决了 VirtualBox 不发送到文件系统事件的常见问题，此问题会导致 server 无法重新加载文件更改。</p>
 </div>
-<br/><h1>管理依赖</h1>
+<div class="break-after"></div><h1>管理依赖</h1>
 <div><blockquote>
 <p>es6 modules</p>
 </blockquote>
@@ -15503,7 +15650,7 @@ Regular expression: /^.*\.ejs$/
 <li><code>id</code> 是 context module 里面所包含的模块 id. 它可能在你使用 <code>module.hot.accept</code> 时会用到。</li>
 </ul>
 </div>
-<br/><h1>公共路径</h1>
+<div class="break-after"></div><h1>公共路径</h1>
 <div><p><code>publicPath</code> 配置选项在各种场景中都非常有用。你可以通过它来指定应用程序中所有资源的基础路径。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#示例" id="示例"></a>
@@ -15552,7 +15699,7 @@ Regular expression: /^.*\.ejs$/
 <span class="token keyword">import</span> <span class="token string">'./app'</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>集成</h1>
+<div class="break-after"></div><h1>集成</h1>
 <div><p>首先，我们要消除一个常见的误解。webpack 是一个模块打包工具(module bundler)（例如，<a href="http://browserify.org/">Browserify</a> 或 <a href="http://brunch.io/">Brunch</a>）。而<em>不是一个任务执行工具(task runner)</em>（例如，<a href="https://www.gnu.org/software/make/">Make</a>, <a href="https://gruntjs.com/">Grunt</a> 或者 <a href="https://gulpjs.com/">Gulp</a> ）。任务执行工具用来自动化处理常见的开发任务，例如，lint(代码检测)、build(构建)、test(测试)。相比模块打包工具，任务执行工具则聚焦在偏重上层的问题上面。你仍然可以得益于这种用法：使用上层的工具，而将打包部分的问题留给 webpack。</p>
 <p>打包工具帮助你取得准备用于部署的 JavaScript 和 stylesheet，将它们转换为适合浏览器的可用格式。例如，可以通过 <a href="/plugins/terser-webpack-plugin">压缩</a>、<a href="/guides/code-splitting">分离 chunk</a> 和 <a href="/guides/lazy-loading">惰性加载</a> 我们的 JavaScript 来提高性能。打包是 web 开发中最重要的挑战之一，解决此问题可以消除开发过程中的大部分痛点。</p>
 <p>好的消息是，虽然有一些功能重叠，但是如果使用方式正确，任务运行工具和模块打包工具还是能够一起协同工作。本指南提供了关于如何将 webpack 与一些流行的任务运行工具集成在一起的高度概述。</p>
@@ -15651,7 +15798,7 @@ mocha-webpack <span class="token string">'test/**/*.js'</span>
 </code></pre>
 <p>获取更多信息，请查看 <a href="https://github.com/webpack-contrib/karma-webpack">仓库</a>。</p>
 </div>
-<br/><h1>loader</h1>
+<div class="break-after"></div><h1>loader</h1>
 <div><p>webpack 可以使用 <a href="/concepts/loaders">loader</a> 来预处理文件。这允许你打包除 JavaScript 之外的任何静态资源。你可以使用 Node.js 来很简单地编写自己的 loader。</p>
 <p>loader 通过在 <code>require()</code> 语句中使用 <code>loadername!</code> 前缀来激活，或者通过 webpack 配置中的正则表达式来自动应用 - 查看<a href="/concepts/loaders#configuration">配置</a>。</p>
 <h2 class="header">
@@ -15743,7 +15890,7 @@ mocha-webpack <span class="token string">'test/**/*.js'</span>
 <p><img alt="Awesome" src="../assets/awesome-badge.svg"/>
 更多第三方 loader，查看 <a href="https://github.com/webpack-contrib/awesome-webpack#loaders">awesome-webpack</a> 列表。</p>
 </div>
-<br/><h1>babel-loader</h1>
+<div class="break-after"></div><h1>babel-loader</h1>
 <div><p>此 package 允许你使用 <a href="https://github.com/babel/babel">Babel</a> 和 <a href="https://github.com/webpack/webpack">webpack</a> 转译 <code>JavaScript</code> 文件。</p>
 <p><strong>注意</strong>：请在 Babel <a href="https://github.com/babel/babel/issues">Issues</a> tracker 上报告输出时遇到的问题。</p>
 <h2 class="header">
@@ -16016,7 +16163,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p><a href="https://couto.mit-license.org/">MIT</a></p>
 </div>
-<br/><h1>yaml-frontmatter-loader</h1>
+<div class="break-after"></div><h1>yaml-frontmatter-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -16065,7 +16212,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <a aria-label="&lt;a href=" https:="" license="" master="" raw.githubusercontent.com="" webpack-contrib="" yaml-frontmatter-loader="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>cache-loader</h1>
+<div class="break-after"></div><h1>cache-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -16421,7 +16568,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/cache-loader/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>coffee-loader</h1>
+<div class="break-after"></div><h1>coffee-loader</h1>
 <div><p>就像加载 JavaScript 那样，加载 <a href="https://coffeescript.org/">CoffeeScript</a></p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -16594,7 +16741,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>coffee-redux-loader</h1>
+<div class="break-after"></div><h1>coffee-redux-loader</h1>
 <div><p>Coffee Script Redux loader for Webpack.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -16645,7 +16792,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>config-loader</h1>
+<div class="break-after"></div><h1>config-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -16894,7 +17041,7 @@ which contain properties not present in the webpack schema, to pass validation.<
 <a aria-label="&lt;a href=" config-loader="" https:="" license="" master="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>coverjs-loader</h1>
+<div class="break-after"></div><h1>coverjs-loader</h1>
 <div><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#用法" id="用法"></a>
 <span class="text">用法</span>
@@ -16939,7 +17086,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p>MIT (<a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a>)</p>
 </div>
-<br/><h1>css-loader</h1>
+<div class="break-after"></div><h1>css-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -18080,7 +18227,7 @@ It doesn't embed CSS but only exports the identifier mappings.</p>
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/css-loader/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>eslint-loader</h1>
+<div class="break-after"></div><h1>eslint-loader</h1>
 <div><blockquote>
 <p>eslint loader for webpack</p>
 </blockquote>
@@ -18409,7 +18556,7 @@ See <a href="https://github.com/webpack-contrib/eslint-loader/issues/129">#129</
 <a aria-label="&lt;a href=" eslint-loader="" https:="" license="" master="" raw.githubusercontent.com="" webpack-contrib="">License</a>" class="icon-link" href="#license"&gt;
       </h2>
 </div>
-<br/><h1>exports-loader</h1>
+<div class="break-after"></div><h1>exports-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -18467,7 +18614,7 @@ See <a href="https://github.com/webpack-contrib/eslint-loader/issues/129">#129</
 <a aria-label="&lt;a href=" exports-loader="" https:="" license="" master="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>expose-loader</h1>
+<div class="break-after"></div><h1>expose-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -18576,7 +18723,7 @@ module<span class="token punctuation">:</span> <span class="token punctuation">{
 <a aria-label="&lt;a href=" expose-loader="" https:="" license="" master="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>extract-loader</h1>
+<div class="break-after"></div><h1>extract-loader</h1>
 <div><h1 class="header">
 <a aria-hidden="true" class="anchor" href="#extract-loader" id="extract-loader"></a>
 <span class="text">extract-loader</span>
@@ -18828,7 +18975,7 @@ If you are using a relative <code>publicPath</code> in webpack's <a href="https:
 </h2>
 <p><a href="https://peerigon.com/"><img src="https://assets.peerigon.com/peerigon/logo/peerigon-logo-flat-spinat.png" width="150"/></a></p>
 </div>
-<br/><h1>file-loader</h1>
+<div class="break-after"></div><h1>file-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -19388,7 +19535,7 @@ path/to/file.png?e43b20c069c4a01867c31e98cbce33c9
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/file-loader/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>gzip-loader</h1>
+<div class="break-after"></div><h1>gzip-loader</h1>
 <div><p>gzip loader module for webpack</p>
 <p>Enables loading gzipped resources.</p>
 <h2 class="header">
@@ -19457,7 +19604,7 @@ path/to/file.png?e43b20c069c4a01867c31e98cbce33c9
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>html-loader</h1>
+<div class="break-after"></div><h1>html-loader</h1>
 <div><p>Exports HTML as string. HTML is minimized when the compiler demands.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -19740,7 +19887,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tbody>
 </table><p></p>
 </div>
-<br/><h1>i18n-loader</h1>
+<div class="break-after"></div><h1>i18n-loader</h1>
 <div><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#用法" id="用法"></a>
 <span class="text">用法</span>
@@ -19822,7 +19969,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p>MIT (<a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a>)</p>
 </div>
-<br/><h1>imports-loader</h1>
+<div class="break-after"></div><h1>imports-loader</h1>
 <div><p>The imports loader allows you to use modules that depend on specific global variables.</p>
 <p>This is useful for third-party modules that rely on global variables like <code>$</code> or <code>this</code> being the <code>window</code> object. The imports loader can add the necessary <code>require('whatever')</code> calls, so those modules work with webpack.</p>
 <h2 class="header">
@@ -20011,7 +20158,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>istanbul-instrumenter-loader</h1>
+<div class="break-after"></div><h1>istanbul-instrumenter-loader</h1>
 <div><p>Instrument JS files with <a href="https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-lib-instrument">istanbul-lib-instrument</a> for subsequent code coverage reporting</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -20395,7 +20542,7 @@ components<span class="token punctuation">.</span><span class="token function">k
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>jshint-loader</h1>
+<div class="break-after"></div><h1>jshint-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -20538,7 +20685,7 @@ WARNING <span class="token keyword">in</span> <span class="token punctuation">.<
 <a aria-label="&lt;a href=" https:="" jshint-loader="" license="" master="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>json-loader</h1>
+<div class="break-after"></div><h1>json-loader</h1>
 <div><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
 <span class="text">安装</span>
@@ -20591,7 +20738,7 @@ WARNING <span class="token keyword">in</span> <span class="token punctuation">.<
 </tbody>
 </table><p></p>
 </div>
-<br/><h1>json5-loader</h1>
+<div class="break-after"></div><h1>json5-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -20676,7 +20823,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/json5-loader/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>bundle-loader</h1>
+<div class="break-after"></div><h1>bundle-loader</h1>
 <div><p>webpack 的 bundle loader</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -20893,7 +21040,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>mocha-loader</h1>
+<div class="break-after"></div><h1>mocha-loader</h1>
 <div><p>Allows <a href="http://mochajs.org/">Mocha</a> tests to be loaded and run via webpack</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -20987,7 +21134,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre>
 </div>
-<br/><h1>multi-loader</h1>
+<div class="break-after"></div><h1>multi-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -21041,7 +21188,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <a aria-label="&lt;a href=" https:="" license="" master="" multi-loader="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>node-loader</h1>
+<div class="break-after"></div><h1>node-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -21102,7 +21249,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <a aria-label="&lt;a href=" https:="" license="" master="" node-loader="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>null-loader</h1>
+<div class="break-after"></div><h1>null-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -21166,7 +21313,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <a aria-label="&lt;a href=" https:="" license="" master="" null-loader="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>polymer-webpack-loader</h1>
+<div class="break-after"></div><h1>polymer-webpack-loader</h1>
 <div><p><a href="https://badge.fury.io/js/polymer-webpack-loader"><img alt="npm version" src="https://badge.fury.io/js/polymer-webpack-loader.svg"/></a>
 <a href="https://travis-ci.org/webpack-contrib/polymer-webpack-loader"><img alt="build status" src="https://travis-ci.org/webpack-contrib/polymer-webpack-loader.svg?branch=master"/></a></p>
 <blockquote>
@@ -21471,10 +21618,10 @@ for the proper loading sequence.</p>
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>postcss-loader</h1>
+<div class="break-after"></div><h1>postcss-loader</h1>
 <div><p> </p><p>Loader for <a href="https://webpack.js.org/">webpack</a> to process CSS with <a href="https://postcss.org/">PostCSS</a></p>
 </div>
-<br/><h1>raw-loader</h1>
+<div class="break-after"></div><h1>raw-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -21541,7 +21688,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/raw-loader/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>react-proxy-loader</h1>
+<div class="break-after"></div><h1>react-proxy-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]</p>
@@ -21611,7 +21758,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <a aria-label="&lt;a href=" https:="" license="" master="" raw.githubusercontent.com="" react-proxy-loader="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>restyle-loader</h1>
+<div class="break-after"></div><h1>restyle-loader</h1>
 <div><div align="center"><p>Updates style <code>&lt;link&gt;</code></p>
 <p> href value with a hash to trigger a style reload</p>
 <p>Loader new home: <a href="https://github.com/danielverejan/restyle-loader">restyle-loader</a></p>
@@ -21686,7 +21833,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>sass-loader</h1>
+<div class="break-after"></div><h1>sass-loader</h1>
 <div><p>Loads a Sass/SCSS file and compiles it to CSS.</p>
 <p>Use the <a href="/loaders/css-loader/">css-loader</a> or the <a href="/loaders/raw-loader/">raw-loader</a> to turn it into a JS module and the <a href="/plugins/mini-css-extract-plugin/">mini-css-extract-plugin</a> to extract it into a separate file.
 Looking for the webpack 1 loader? Check out the <a href="https://github.com/webpack-contrib/sass-loader/tree/archive/webpack-1">archive/webpack-1 branch</a>.</p>
@@ -21980,7 +22127,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p><a href="http://www.opensource.org/licenses/mit-license.php">MIT</a></p>
 </div>
-<br/><h1>script-loader</h1>
+<div class="break-after"></div><h1>script-loader</h1>
 <div><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
 <span class="text">安装</span>
@@ -22120,7 +22267,7 @@ Default: <code>false</code></p>
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>source-map-loader</h1>
+<div class="break-after"></div><h1>source-map-loader</h1>
 <div><p>Extracts source maps from existing source files (from their <code>sourceMappingURL</code>).</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -22183,7 +22330,7 @@ Default: <code>false</code></p>
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>style-loader</h1>
+<div class="break-after"></div><h1>style-loader</h1>
 <div><p>Adds CSS to the DOM by injecting a <code>&lt;style&gt;</code> tag</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -22837,7 +22984,7 @@ This could be used for non local development and production.</p>
 <p></p></td>
 </tr><tr></tr></tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>svg-inline-loader</h1>
+<div class="break-after"></div><h1>svg-inline-loader</h1>
 <div><p>This Webpack loader inlines SVG as module. If you use Adobe suite or Sketch to export SVGs, you will get auto-generated, unneeded crusts. This loader removes it for you, too.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -22968,7 +23115,7 @@ This could be used for non local development and production.</p>
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>thread-loader</h1>
+<div class="break-after"></div><h1>thread-loader</h1>
 <div><p>Runs the following loaders in a worker pool.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -23082,7 +23229,7 @@ threadLoader<span class="token punctuation">.</span><span class="token function"
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>transform-loader</h1>
+<div class="break-after"></div><h1>transform-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -23212,7 +23359,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <a aria-label="&lt;a href=" https:="" license="" master="" raw.githubusercontent.com="" transform-loader="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>url-loader</h1>
+<div class="break-after"></div><h1>url-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -23337,7 +23484,7 @@ extensions will be used to lookup the MIME type.</p>
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/url-loader/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>val-loader</h1>
+<div class="break-after"></div><h1>val-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -23505,7 +23652,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <a aria-label="&lt;a href=" https:="" license="" master="" raw.githubusercontent.com="" val-loader="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>worker-loader</h1>
+<div class="break-after"></div><h1>worker-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -23766,7 +23913,7 @@ worker<span class="token punctuation">.</span><span class="token function">addEv
 <a aria-label="&lt;a href=" https:="" license="" master="" raw.githubusercontent.com="" webpack-contrib="" worker-loader="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>workerize-loader</h1>
+<div class="break-after"></div><h1>workerize-loader</h1>
 <div><p><img alt="workerize-loader" src="https://i.imgur.com/HZZG8wr.jpg" width="1358"/></p>
 <blockquote>
 <p>A webpack loader that moves a module and its dependencies into a Web Worker, automatically reflecting exported functions as asynchronous proxies.</p>
@@ -23821,7 +23968,7 @@ instance<span class="token punctuation">.</span><span class="token function">exp
 </h3>
 <p><a href="https://oss.ninja/mit/developit">MIT License</a> © <a href="https://jasonformat.com/">Jason Miller</a></p>
 </div>
-<br/><h1>less-loader</h1>
+<div class="break-after"></div><h1>less-loader</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -24104,7 +24251,7 @@ file paths in <code>url(...)</code> statements.
 <a aria-label="&lt;a href=" https:="" less-loader="" license="" master="" raw.githubusercontent.com="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>plugin</h1>
+<div class="break-after"></div><h1>plugin</h1>
 <div><p>webpack 有着丰富的插件接口(rich plugin interface)。webpack 自身的多数功能都使用这个插件接口。这个插件接口使 webpack 变得<strong>极其灵活</strong>。</p>
 <div class="table">
 <div class="table-wrap">
@@ -24510,7 +24657,7 @@ file paths in <code>url(...)</code> statements.
 </div><p>更多第三方插件，请查看 <a href="https://github.com/webpack-contrib/awesome-webpack#webpack-plugins">awesome-webpack</a> 列表。</p>
 <p><img alt="Awesome" src="../assets/awesome-badge.svg"/></p>
 </div>
-<br/><h1>AutomaticPrefetchPlugin</h1>
+<div class="break-after"></div><h1>AutomaticPrefetchPlugin</h1>
 <div><p>The <code>AutomaticPrefetchPlugin</code> discovers <strong>all modules</strong> from the previous compilation upfront while watching for changes, trying to improve the incremental build times. Compared to <a href="/plugins/prefetch-plugin/"><code>PrefetchPlugin</code></a> which discovers a <strong>single module</strong> upfront.</p>
 <blockquote class="warning"><div class="tip-content"> May or may not have a performance benefit since the incremental build times are pretty fast. </div></blockquote><p><strong>webpack.config.js</strong></p>
 <pre><code class="lang-javascript">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
@@ -24521,7 +24668,7 @@ file paths in <code>url(...)</code> statements.
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>ZopfliWebpackPlugin</h1>
+<div class="break-after"></div><h1>ZopfliWebpackPlugin</h1>
 <div><p>Node-Zopfli plugin for Webpack.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -24607,7 +24754,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>BannerPlugin</h1>
+<div class="break-after"></div><h1>BannerPlugin</h1>
 <div><p>为每个 chunk 文件头部添加 banner。</p>
 <pre><code class="lang-javascript"><span class="token keyword">const</span> webpack <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'webpack'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -24660,7 +24807,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>ClosureWebpackPlugin</h1>
+<div class="break-after"></div><h1>ClosureWebpackPlugin</h1>
 <div><p><a href="https://badge.fury.io/js/closure-webpack-plugin"><img alt="npm version" src="https://badge.fury.io/js/closure-webpack-plugin.svg"/></a></p>
 <p>This plugin supports the use of Google's Closure Tools with webpack.</p>
 <p><strong>Note: This is the webpack 4 branch.</strong></p>
@@ -24846,7 +24993,7 @@ webpack plugin.</p>
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>CommonsChunkPlugin</h1>
+<div class="break-after"></div><h1>CommonsChunkPlugin</h1>
 <div><p><code>CommonsChunkPlugin</code> 插件，是一个可选的用于建立一个独立文件(又称作 chunk)的功能，这个文件包括多个入口 <code>chunk</code> 的公共模块。</p>
 <blockquote class="warning"><div class="tip-content"> The CommonsChunkPlugin 已经从 webpack v4 legato 中移除。想要了解在最新版本中如何处理 chunk，请查看 <a href="/plugins/split-chunks-plugin/">SplitChunksPlugin</a>。 </div></blockquote><p>通过将公共模块拆出来，最终合成的文件能够在最开始的时候加载一次，便存到缓存中供后续使用。这个带来页面速度上的提升，因为浏览器会迅速将公共的代码从缓存中取出来，而不是每次访问一个新页面时，再去加载一个更大的文件。</p>
 <pre><code class="lang-javascript"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>optimize<span class="token punctuation">.</span>CommonsChunkPlugin</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -25084,7 +25231,7 @@ webpack plugin.</p>
 <li><a href="https://github.com/webpack/webpack/tree/8b888fedfaeaac6bd39168c0952cc19e6c34280a/examples/multiple-entry-points-commons-chunk-css-bundle">Multiple Entry Points with Commons Chunk</a></li>
 </ul>
 </div>
-<br/><h1>CompressionWebpackPlugin</h1>
+<div class="break-after"></div><h1>CompressionWebpackPlugin</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -25389,7 +25536,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/compression-webpack-plugin/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>ContextReplacementPlugin</h1>
+<div class="break-after"></div><h1>ContextReplacementPlugin</h1>
 <div><p><em>上下文(context)</em> 与一个 <a href="/guides/dependency-management/#require-with-expression">含有表达式的 require 语句</a> 相关，例如 <code>require('./locale/' + name + '.json')</code>。遇见此类表达式时，webpack 查找目录 (<code>'./locale/'</code>) 下符合正则表达式 (<code>/^.*\.json$/</code>)的文件。由于 <code>name</code> 在编译时(compile time)还是未知的，webpack 会将每个文件都作为模块引入到 bundle 中。</p>
 <p><code>上下文替换插件(ContextReplacementPlugin)</code> 允许你覆盖查找规则，该插件有许多配置方式：</p>
 <h2 class="header">
@@ -25453,7 +25600,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>CopyWebpackPlugin</h1>
+<div class="break-after"></div><h1>CopyWebpackPlugin</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -26472,10 +26619,10 @@ for logging management, and more information can be found on its page.</p>
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/copy-webpack-plugin/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>CssWebpackPlugin</h1>
+<div class="break-after"></div><h1>CssWebpackPlugin</h1>
 <div><p>Nothing to see here .... yet</p>
 </div>
-<br/><h1>DefinePlugin</h1>
+<div class="break-after"></div><h1>DefinePlugin</h1>
 <div><p><code>DefinePlugin</code> 允许创建一个在<strong>编译</strong>时可以配置的全局常量。这可能会对开发模式和生产模式的构建允许不同的行为非常有用。如果在开发构建中，而不在发布构建中执行日志记录，则可以使用全局常量来决定是否记录日志。这就是 <code>DefinePlugin</code> 的用处，设置它，就可以忘记开发环境和生产环境构建的规则。</p>
 <pre><code class="lang-javascript"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>DefinePlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   <span class="token comment">// Definitions...</span>
@@ -26548,7 +26695,7 @@ for logging management, and more information can be found on its page.</p>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>DllPlugin</h1>
+<div class="break-after"></div><h1>DllPlugin</h1>
 <div><p><code>DLLPlugin</code> 和 <code>DLLReferencePlugin</code> 用某种方法实现了拆分 bundles，同时还大大提升了构建的速度。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#dllplugin" id="dllplugin"></a>
@@ -26657,7 +26804,7 @@ for logging management, and more information can be found on its page.</p>
 <li><a href="https://github.com/webpack/webpack/tree/master/test/configCases/dll-plugin">DllReferencePlugin use Dll test</a></li>
 </ul>
 </div>
-<br/><h1>EnvironmentPlugin</h1>
+<div class="break-after"></div><h1>EnvironmentPlugin</h1>
 <div><p><code>EnvironmentPlugin</code> 是一个通过 <a href="/plugins/define-plugin"><code>DefinePlugin</code></a> 来设置 <a href="https://nodejs.org/api/process.html#process_process_env"><code>process.env</code></a> 环境变量的快捷方式。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#用法" id="用法"></a>
@@ -26726,7 +26873,7 @@ S3_API<span class="token operator">=</span>mysecretkey
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>EvalSourceMapDevToolPlugin</h1>
+<div class="break-after"></div><h1>EvalSourceMapDevToolPlugin</h1>
 <div><p>This plugin enables more fine grained control of source map generation. It is also enabled automatically by certain settings of the <a href="/configuration/devtool/"><code>devtool</code></a> configuration option.</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>EvalSourceMapDevToolPlugin</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
@@ -26798,7 +26945,7 @@ S3_API<span class="token operator">=</span>mysecretkey
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>ExtractTextWebpackPlugin</h1>
+<div class="break-after"></div><h1>ExtractTextWebpackPlugin</h1>
 <div><p>Extract text from a bundle, or bundles, into a separate file.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -27286,7 +27433,7 @@ plugins<span class="token punctuation">:</span> <span class="token punctuation">
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>HashedModuleIdsPlugin</h1>
+<div class="break-after"></div><h1>HashedModuleIdsPlugin</h1>
 <div><p>该插件会根据模块的相对路径生成一个四位数的hash作为模块id, 建议用于生产环境。</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>HashedModuleIdsPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   <span class="token comment">// 选项……</span>
@@ -27316,7 +27463,7 @@ plugins<span class="token punctuation">:</span> <span class="token punctuation">
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>HotModuleReplacementPlugin</h1>
+<div class="break-after"></div><h1>HotModuleReplacementPlugin</h1>
 <div><p>启用<a href="/concepts/hot-module-replacement">热替换模块(Hot Module Replacement)</a>，也被称为 HMR。</p>
 <blockquote class="warning"><div class="tip-content"> <strong>永远不要</strong>在生产环境(production)下启用 HMR </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#基本用法-basic-usage-" id="基本用法-basic-usage-"></a>
@@ -27340,7 +27487,7 @@ plugins<span class="token punctuation">:</span> <span class="token punctuation">
 <li><code>requestTimeout</code> (number)：下载 manifest 的延时（webpack 3.0.0 后的版本支持）。</li>
 </ul>
 <blockquote class="warning"><div class="tip-content"> 这些选项属于实验性内容，因此以后可能会被弃用。就如同上文所说的那样，这些选项通常情况下都是没有必要设置的，仅仅是设置一下 <code>new webpack.HotModuleReplacementPlugin()</code> 在大部分情况下就足够了。 </div></blockquote></div>
-<br/><h1>HtmlWebpackPlugin</h1>
+<div class="break-after"></div><h1>HtmlWebpackPlugin</h1>
 <div><p><a href="https://github.com/jantimon/html-webpack-plugin"><code>HtmlWebpackPlugin</code></a>简化了HTML文件的创建，以便为你的webpack包提供服务。这对于在文件名中包含每次会随着编译而发生变化哈希的 webpack bundle 尤其有用。 你可以让插件为你生成一个HTML文件，使用<a href="https://lodash.com/docs#template">lodash模板</a>提供你自己的模板，或使用你自己的<a href="/loaders">loader</a>。</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -27399,7 +27546,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p>这个插件支持第三方插件。详细列表参阅<a href="https://github.com/jantimon/html-webpack-plugin#plugins">文档</a>。</p>
 </div>
-<br/><h1>I18nWebpackPlugin</h1>
+<div class="break-after"></div><h1>I18nWebpackPlugin</h1>
 <div><p>i18n (localization) plugin for Webpack.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -27462,7 +27609,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>IgnorePlugin</h1>
+<div class="break-after"></div><h1>IgnorePlugin</h1>
 <div><p>IgnorePlugin 防止在 <code>import</code> 或 <code>require</code> 调用时，生成以下正则表达式匹配的模块：</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#using-regular-expressions" id="using-regular-expressions"></a>
@@ -27517,7 +27664,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </code></pre>
 <p>...which means "any require statement matching <code>'./locale'</code> from any directories ending with <code>'moment'</code> will be ignored.</p>
 </div>
-<br/><h1>BabelMinifyWebpackPlugin</h1>
+<div class="break-after"></div><h1>BabelMinifyWebpackPlugin</h1>
 <div><p>一个用于<a href="https://github.com/babel/minify">babel-minify</a>的 webpack 插件 - 基于 babel 的 minifier</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#安装" id="安装"></a>
@@ -27614,7 +27761,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>LimitChunkCountPlugin</h1>
+<div class="break-after"></div><h1>LimitChunkCountPlugin</h1>
 <div><p>当你在编写代码时，可能已经添加了许多代码分离点(code split point)来实现按需加载(load stuff on demand)。在编译完之后，你可能会注意到有一些很小的 chunk - 这产生了大量 HTTP 请求开销。<code>LimitChunkCountPlugin</code> 插件可以通过合并的方式，后处理你的 chunk，以减少请求数。</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>optimize<span class="token punctuation">.</span>LimitChunkCountPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   <span class="token comment">// 选项……</span>
@@ -27674,7 +27821,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <pre><code class="lang-bash">webpack --optimize-min-chunk-size 10000
 </code></pre>
 </div>
-<br/><h1>LoaderOptionsPlugin</h1>
+<div class="break-after"></div><h1>LoaderOptionsPlugin</h1>
 <div><p><code>loader-options-plugin</code> 和其他插件不同，它用于将 webpack 1 迁移至 webpack 2。在 webpack 2 中，对 <code>webpack.config.js</code> 的结构要求变得更加严格；不再开放扩展给其他的 loader/插件。webpack 2 推荐的使用方式是直接传递 <code>options</code> 给 loader/插件（换句话说，<code>配置选项</code>将<strong>不是</strong>全局/共享的）。</p>
 <p>不过，在某个 loader 升级为依靠直接传递给它的配置选项运行之前，可以使用 <code>loader-options-plugin</code> 来抹平差异。你可以通过这个插件配置全局/共享的 loader 配置，使所有的 loader 都能收到这些配置。</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>LoaderOptionsPlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
@@ -27709,14 +27856,14 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>MinChunkSizePlugin</h1>
+<div class="break-after"></div><h1>MinChunkSizePlugin</h1>
 <div><p>通过合并小于 <code>minChunkSize</code> 大小的 chunk，将 chunk 体积保持在指定大小限制以上。</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>optimize<span class="token punctuation">.</span>MinChunkSizePlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   minChunkSize<span class="token punctuation">:</span> <span class="token number">10000</span> <span class="token comment">// Minimum number of characters</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>MiniCssExtractPlugin</h1>
+<div class="break-after"></div><h1>MiniCssExtractPlugin</h1>
 <div><p>[![npm][npm]][npm-url]
 [![deps][deps]][deps-url]
 [![tests][tests]][tests-url]
@@ -28009,7 +28156,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/mini-css-extract-plugin/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>ModuleConcatenationPlugin</h1>
+<div class="break-after"></div><h1>ModuleConcatenationPlugin</h1>
 <div><p>过去 webpack 打包时的一个取舍是将 bundle 中各个模块单独打包成闭包。这些打包函数使你的 JavaScript 在浏览器中处理的更慢。相比之下，一些工具像 Closure Compiler 和 RollupJS 可以提升(hoist)或者预编译所有模块到一个闭包中，提升你的代码在浏览器中的执行速度。</p>
 <p>这个插件会在 webpack 中实现以上的预编译功能。By default this plugin is already enabled in <a href="/concepts/mode/#mode-production">production <code>mode</code></a> and disabled otherwise. If you need it in other modes, you can add it manually:</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>optimize<span class="token punctuation">.</span>ModuleConcatenationPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -28234,7 +28381,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>NormalModuleReplacementPlugin</h1>
+<div class="break-after"></div><h1>NormalModuleReplacementPlugin</h1>
 <div><p><code>NormalModuleReplacementPlugin</code> 允许你用 <code>newResource</code> 替换与 <code>resourceRegExp</code> 匹配的资源。如果 <code>newResource</code> 是相对路径，它会相对于先前的资源被解析。如果 <code>newResource</code> 是函数，它将会覆盖之前被提供资源的请求。</p>
 <p>这对于允许在构建中的不同行为是有用的。</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>NormalModuleReplacementPlugin</span><span class="token punctuation">(</span>
@@ -28297,7 +28444,7 @@ webpack --env.APP_TARGET VERSION_B
 <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token string">'I am version B'</span>
 </code></pre>
 </div>
-<br/><h1>NpmInstallWebpackPlugin</h1>
+<div class="break-after"></div><h1>NpmInstallWebpackPlugin</h1>
 <div><p>Speed up development by <b>automatically installing &amp; saving dependencies</b> with Webpack.</p>
 <p>It is inefficient to <kbd>Ctrl-C</kbd> your
 build script &amp; server just to install
@@ -28399,7 +28546,7 @@ will happen <strong>automatically to install &amp; save missing dependencies</st
 </tr>
 </tbody><tbody></tbody></table><p></p>
 </div>
-<br/><h1>PrefetchPlugin</h1>
+<div class="break-after"></div><h1>PrefetchPlugin</h1>
 <div><p>预取出普通的模块请求(module request)，可以让这些模块在他们被 <code>import</code> 或者是 <code>require</code> 之前就解析并且编译。使用这个预取插件可以提升性能。可以多试试在编译前记录时间(profile)来决定最佳的预取的节点。</p>
 <pre><code class="lang-javascript"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>PrefetchPlugin</span><span class="token punctuation">(</span><span class="token punctuation">[</span>context<span class="token punctuation">]</span><span class="token punctuation">,</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
@@ -28413,7 +28560,7 @@ will happen <strong>automatically to install &amp; save missing dependencies</st
 <li><code>request</code>：普通模块的 request 字符串</li>
 </ul>
 </div>
-<br/><h1>ProfilingPlugin</h1>
+<div class="break-after"></div><h1>ProfilingPlugin</h1>
 <div><p>Generate Chrome profile file which includes timings of plugins execution. Outputs <code>events.json</code> file by default. It is possible to provide custom file path using <code>outputPath</code> option.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#options" id="options"></a>
@@ -28447,7 +28594,7 @@ will happen <strong>automatically to install &amp; save missing dependencies</st
 </ol>
 <p>It will then display timeline stats and calls per plugin!</p>
 </div>
-<br/><h1>ProgressPlugin</h1>
+<div class="break-after"></div><h1>ProgressPlugin</h1>
 <div><p>The <code>ProgressPlugin</code> provides a way to customize how progress is reported during a compilation.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#usage" id="usage"></a>
@@ -28544,7 +28691,7 @@ will happen <strong>automatically to install &amp; save missing dependencies</st
 <li><a href="https://github.com/webpack/webpack/blob/master/lib/ProgressPlugin.js"><code>ProgressPlugin</code> source</a></li>
 </ul>
 </div>
-<br/><h1>ProvidePlugin</h1>
+<div class="break-after"></div><h1>ProvidePlugin</h1>
 <div><p>自动加载模块，而不必到处 <code>import</code> 或 <code>require</code> 。</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>ProvidePlugin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   identifier<span class="token punctuation">:</span> <span class="token string">'module1'</span><span class="token punctuation">,</span>
@@ -28604,7 +28751,7 @@ will happen <strong>automatically to install &amp; save missing dependencies</st
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 </div>
-<br/><h1>SourceMapDevToolPlugin</h1>
+<div class="break-after"></div><h1>SourceMapDevToolPlugin</h1>
 <div><p>本插件实现了对 source map 生成内容进行更细粒度的控制。它也可以通过 <a href="/configuration/devtool/"><code>devtool</code></a> 配置选项的某些设置自动启用。</p>
 <pre><code class="lang-js"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>SourceMapDevToolPlugin</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
@@ -28692,7 +28839,7 @@ will happen <strong>automatically to install &amp; save missing dependencies</st
 <pre><code class="lang-code">https://example.com/project/sourcemaps/bundle-[hash].js.map
 </code></pre>
 </div>
-<br/><h1>SplitChunksPlugin</h1>
+<div class="break-after"></div><h1>SplitChunksPlugin</h1>
 <div><p>Originally, chunks (and modules imported inside them) were connected by a parent-child relationship in the internal webpack graph. The <code>CommonsChunkPlugin</code> was used to avoid duplicated dependencies across them, but further optimizations were not possible.</p>
 <p>Since webpack v4, the <code>CommonsChunkPlugin</code> was removed in favor of <code>optimization.splitChunks</code>.</p>
 <h2 class="header">
@@ -29085,7 +29232,7 @@ All placeholders available in <a href="/configuration/output/#output-filename"><
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 <blockquote class="tip"><div class="tip-content"> This will result in splitting <code>react</code> and <code>react-dom</code> into a separate chunk. If you're not sure what packages have been included in a chunk you may refer to <a href="/guides/code-splitting/#bundle-analysis">Bundle Analysis</a> section for details. </div></blockquote></div>
-<br/><h1>StylelintWebpackPlugin</h1>
+<div class="break-after"></div><h1>StylelintWebpackPlugin</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -29244,7 +29391,7 @@ plugin.</p>
 <a aria-label="&lt;a href=" https:="" license="" master="" raw.githubusercontent.com="" stylelint-webpack-plugin="" webpack-contrib="">MIT</a>" class="icon-link" href="#mit"&gt;
       </h4>
 </div>
-<br/><h1>TerserWebpackPlugin</h1>
+<div class="break-after"></div><h1>TerserWebpackPlugin</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -29925,7 +30072,7 @@ Return <code>true</code> to keep the warning, <code>false</code> otherwise.</p>
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/terser-webpack-plugin/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>UglifyjsWebpackPlugin</h1>
+<div class="break-after"></div><h1>UglifyjsWebpackPlugin</h1>
 <div><p>[![npm][npm]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
@@ -30606,7 +30753,7 @@ Return <code>true</code> to keep the warning, <code>false</code> otherwise.</p>
 </h2>
 <p><a href="https://raw.githubusercontent.com/webpack-contrib/uglifyjs-webpack-plugin/master/LICENSE">MIT</a></p>
 </div>
-<br/><h1>WatchIgnorePlugin</h1>
+<div class="break-after"></div><h1>WatchIgnorePlugin</h1>
 <div><p>无视指定的文件。换句话说，当处于<a href="/configuration/watch">监视模式(watch mode)</a>下，符合给定地址的文件或者满足给定正则表达式的文件的改动不会触发重编译。</p>
 <pre><code class="lang-javascript"><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>WatchIgnorePlugin</span><span class="token punctuation">(</span>paths<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
@@ -30619,7 +30766,7 @@ Return <code>true</code> to keep the warning, <code>false</code> otherwise.</p>
 <li><code>路径(paths)</code> (array)：一个正则表达式或者绝对路径的数组。表示符合条件的文件将不会被监视</li>
 </ul>
 </div>
-<br/><h1>Internal webpack plugins</h1>
+<div class="break-after"></div><h1>Internal webpack plugins</h1>
 <div><p>This is a list of plugins which are used by webpack internally.</p>
 <blockquote class="warning"><div class="tip-content"> You should only care about them if you are building your own compiler based on webpack, or introspect the internals. </div></blockquote><p>Categories of internal plugins:</p>
 <ul>
@@ -30970,10 +31117,10 @@ Return <code>true</code> to keep the warning, <code>false</code> otherwise.</p>
 <p><code>optimize/DedupePlugin()</code></p>
 <p>Deduplicates modules and adds runtime code.</p>
 </div>
-<br/><h1>迁移</h1>
+<div class="break-after"></div><h1>迁移</h1>
 <div><p>此章节包含关于从较早版本的 webpack 迁移到较新版本的信息。</p>
 </div>
-<br/><h1>To v4 from v3</h1>
+<div class="break-after"></div><h1>To v4 from v3</h1>
 <div><p>This guide only shows major changes that affect end users. For more details please see <a href="https://github.com/webpack/webpack/releases">the changelog</a>.</p>
 <h2 class="header">
 <a aria-hidden="true" class="anchor" href="#node-js-v4" id="node-js-v4"></a>
@@ -31107,7 +31254,7 @@ Return <code>true</code> to keep the warning, <code>false</code> otherwise.</p>
 </h2>
 <p><code>module.loaders</code> were deprecated since webpack 2 and are now removed in favor of <a href="/configuration/module/#rule"><code>module.rules</code></a>.</p>
 </div>
-<br/><h1>从 v1 升级到 v2 或 v3</h1>
+<div class="break-after"></div><h1>从 v1 升级到 v2 或 v3</h1>
 <div><p>以下各节描述从 webpack 1 到 webpack 2 的重大变化。</p>
 <blockquote class="tip"><div class="tip-content"> webpack 从 1 到 2 的变化，比从 2 到 3 要少很多，所以版本迁移起来难度应该不大。如果你遇到了问题，请查看 <a href="https://github.com/webpack/webpack/releases">更新日志</a> 以了解更多细节。 </div></blockquote><h2 class="header">
 <a aria-hidden="true" class="anchor" href="#resolve-root-resolve-fallback-resolve-modulesdirectories" id="resolve-root-resolve-fallback-resolve-modulesdirectories"></a>
@@ -31670,5 +31817,5 @@ book<span class="token punctuation">.</span><span class="token keyword">default<
 }
 </code></pre>
 </div>
-<br/></body>
+<div class="break-after"></div></body>
 </html>
