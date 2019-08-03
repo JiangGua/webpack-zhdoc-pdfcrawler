@@ -42,6 +42,15 @@ def save_pdf(file_name):
     }
     pdfkit.from_file(file_name + '.html', file_name + '.pdf', options=options)
 
+def rm_avatars(html):
+    """
+    删除'维护人员'部分
+    """
+    if html.find('<span class="text">维护人员</span>') != -1:
+        index = html.find('<a aria-hidden="true" class="anchor" href="#维护人员" id="维护人员"></a>')
+        index -= 20
+        html = html[:index] + '</div>'
+    return html
 
 # main
 if __name__ == '__main__':
@@ -63,6 +72,7 @@ if __name__ == '__main__':
     urls = get_url_list('https://webpack.docschina.org/concepts/')
     for url in urls:
         html = get_content(url) + '\n<div class="break-after"></div>'
+        html = rm_avatars(html)
         with open('book.html', 'a', encoding='utf-8') as f:
             f.write(html)
         print(url + " completed")
